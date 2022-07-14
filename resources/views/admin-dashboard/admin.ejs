@@ -1,0 +1,154 @@
+<%- include('../partials/admin/top-bar') %> <%-
+include('../partials/admin/sidebar') %>
+
+<!-- main page content starts here -->
+<main class="mt-5 pt-3 main" style="padding-right: 1.5rem">
+  <div class="container-fluid">
+    <!-- page headings starts -->
+    <div class="page-heading">
+      <div class="row">
+        <div
+          class="d-sm-flex align-items-center justify-content-between mb-1 mt-5"
+        >
+          <% if(user){ %>
+          <h1 class="h3 mb-0 text-gray-800 mb-3">
+            Welcome <%= user.username %>
+          </h1>
+          <% } %>
+          <!-- <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="bi bi-download fa-sm text-white-50"></i>Generate
+                        Report</a> -->
+        </div>
+      </div>
+    </div>
+    <!-- page headings ends -->
+    <!-- cards starts here -->
+    <div class="row">
+      <!-- Pending orders Card  -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+                >
+                  Pending Orders
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">9</div>
+              </div>
+              <div class="col-auto">
+                <i class="bi bi-cart-check"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Completed Card  -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-warning shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-success text-uppercase mb-1"
+                >
+                  Completed Orders
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">4</div>
+              </div>
+              <div class="col-auto">
+                <i class="bi bi-check-circle"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cancel Card  -->
+      <div class="col-xl-3 col-md-6 mb-4">
+        <div class="card border-left-success shadow h-100 py-2">
+          <div class="card-body">
+            <div class="row no-gutters align-items-center">
+              <div class="col mr-2">
+                <div
+                  class="text-xs font-weight-bold text-danger text-uppercase mb-1"
+                >
+                  Cancelled Orders
+                </div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+              </div>
+              <div class="col-auto">
+                <i class="bi bi-bicycle"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- order status table starts (6 - order) -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">Orders</div>
+          <div class="card-body">
+            <div class="table-responsive">
+              <table class="table data-table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">Order Number</th>
+                    <th scope="col" class="text-center">Username</th>
+                    <th scope="col" class="text-center">Payment Method</th>
+                    <th scope="col" class="text-center">Status</th>
+                    <th scope="col" class="text-center">Assigned To</th>
+                    <th scope="col" class="text-center">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="text-center">
+                    <th scope="row" class="text-center">1</th>
+                    <td class="text-center">2</td>
+                    <td>ubaid</td>
+                    <td class="text-center">cod</td>
+                    <td class="text-center">
+                      <p class="text-primary">Processing</p>
+                    </td>
+                    <td>No rider assigned</td>
+                    <td class="text-center">
+                      <div class="dropdown">
+                        <button
+                          class="btn btn-secondary btn-sm dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="bi bi-gear-fill"></i>
+                        </button>
+                        <ul
+                          class="dropdown-menu shadow-lg rounded mt-1"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <li>
+                            <a class="dropdown-item btn" href="#">View</a>
+                          </li>
+                          <li>
+                            <a class="dropdown-item" href="#">Delete</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- order status table ends (6 - orders) -->
+  </div>
+</main>
+<!-- main page content ends here -->

@@ -1,0 +1,88 @@
+<!-- topbar starts -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container-fluid">
+    <!-- offcanvas trigger -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasExample"
+      aria-controls="offcanvasExample"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <!-- offcanvas trigger ends -->
+    <a class="navbar-brand fw-bold text-uppercase me-auto" href="/admin"
+      >Fatafut Mangwaen</a
+    >
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <form class="d-flex ms-auto"></form>
+      <!--
+                <ul class="navbar-nav mb-2 mb-lg-0">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link notify" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-alarm-fill"></i>
+                            <span class="position-absolute top-3 start-100 translate-middle badge rounded-pill bg-danger">
+                               
+                            </span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                            <?php if ($unread_count > 0) {
+                                while ($row = mysqli_fetch_assoc($order_notify)) { ?>
+                                    <li><a id="message" class="dropdown-item" href='./single-order.php?id=<?php echo $row['user_id']; ?>&b_id=<?php echo $row['business_id']; ?>'> <b><?php echo ucfirst($row['cust_username']); ?> </b> &nbsp;&nbsp; placed an order</a></li>
+                                <?php }
+                            } else { ?>
+                                <li class="ps-3">No notifications.</li>
+                            <?php } ?>
+                        </ul>
+                    </li>
+                </ul> -->
+      <ul class="navbar-nav mb-2 mb-lg-0 text-end">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="navbarDropdown"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <i class="bi bi-people-fill"></i>
+          </a>
+          <ul
+            class="dropdown-menu dropdown-menu-end"
+            aria-labelledby="navbarDropdown"
+          >
+            <li>
+              <a class="dropdown-item" href="/update-business-profile"
+                >Profile</a
+              >
+            </li>
+            <li>
+              <form id="logout" action="/logout" method="post">
+                <a
+                  onclick="document.getElementById('logout').submit()"
+                  class="dropdown-item"
+                  href="#"
+                  >logout</a
+                >
+              </form>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<!-- topbar ends here -->

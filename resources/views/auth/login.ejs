@@ -1,0 +1,81 @@
+<section class="bg-light mt-5 pt-3">
+    <div class="container-fluid col-8">
+        <!-- page heading starts  -->
+        <div class="page-heading">
+            <div class="row">
+               
+            </div>
+            <div class="row">
+                <div class="
+                align-items-center
+                mb-1
+                mt-5
+              ">
+                    <h1 class="h3 mb-3 text-gray-800 text-center">
+                        Login
+                    </h1>
+                    <hr>
+                </div>
+                
+            </div>
+        </div>
+        <!-- page heading ends  -->
+    
+        <!-- Login user form-->
+        <div class="row justify-content-center ">
+            <div class="col-md-6 mb-5">
+                <div class="card mb-5">
+                    <div class="card-body py-4">
+                        <form action="/login" method="post">
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="email" class="form-control" type="email" placeholder="Email" required />
+                                            <label for="floatingInput">Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="password" class="form-control" type="password" placeholder="Password" required />
+                                            <label for="floatingInput">Password</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <h5>Forgot Password?<a class="link-primary" href="forgot-password.php"> Click here</a></h5>
+                                    </div>
+                                </div>
+    
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-12 d-grid gap-2">
+                                    <input type="submit" class="btn btn-danger" value="Login"></input>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="row">
+                            <h5 class="text-center">Not registered?<a class="link-primary" href="/register-seller"> Get Registered</a></h5>
+                        </div>  
+                        <% if(messages.error){ %>
+                            <div class="row">
+                            <div class="row col-4 text-center">
+                            </div>
+                            <div class="row col-6 text-center">
+                                <div class='alert alert-danger' role='alert'><%= messages.error%></div>
+                            </div>
+                            <div class="row col-4 text-center">
+                            </div>
+                            </div>
+                            <% } %>                      
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+        <!--Login user form ends -->
+    </div>
+    </section>
+    

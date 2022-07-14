@@ -1,0 +1,175 @@
+<!-- admin registeration -->
+<main class="mt-5 pt-3" style="padding-right: 1.5rem">
+    <div class="container-fluid">
+        <!-- page heading starts  -->
+        <div class="page-heading">
+            <div class="row">
+                <div class="
+                align-items-center
+                mb-1
+                mt-5
+              ">
+                    <h1 class="h3 mb-3 text-gray-800 text-center">
+                        Register Your Business
+                    </h1>
+
+                </div>
+            </div>
+        </div>
+        <!-- page heading ends  -->
+
+        <!-- Register business form-->
+        <div class="row justify-content-center">
+            <div class="col-md-8 mb-5">
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <% if(messages.error){ %>
+                            <div class="row">
+                            <div class="row col-4 text-center">
+                            </div>
+                            <div class="row col-6 text-center">
+                                <div class='alert alert-danger' role='alert'><%= messages.error %></div>
+                            </div>
+                            <div class="row col-4 text-center">
+                            </div>
+                            </div>
+                            <% } %>
+                        <form action="/register-seller" method="post" id="product_form">
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="first_name" class="form-control" type="text" value="<%= messages.f_name %>" placeholder="First Name" required />
+                                            <label for="floatingInput">First Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="last_name" class="form-control" type="text" value="<%= messages.l_name %>" placeholder="Last Name" required />
+                                            <label for="floatingInput">Last Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="username" class="form-control" type="text" value="<%= messages.username %>" placeholder="User Name" required />
+                                            <label for="floatingInput">Username</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="email" class="form-control" type="email" value="<%= messages.email %>" placeholder="Email" required />
+                                            <label for="floatingInput">Email</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="phone" class="form-control" type="tel" placeholder="Phone" value="<%= messages.phone %>" required />
+                                            <label for="floatingInput">Phone</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="password" class="form-control" type="password" placeholder="Password" required />
+                                            <label for="floatingInput">Password</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-6">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="address" class="form-control" type="text" placeholder="Address" value="<%= messages.address %>" required />
+                                            <label for="floatingInput">Address</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-6">
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="role" disabled>
+                                            <option value="1">Seller</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="mb-3">
+                                        <div class="form-floating">
+                                            <input name="business_name" class="form-control" type="text" placeholder="Business Name" value="<%= messages.business_name %>" required/>
+                                            <label for="floatingInput">Business Name</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="business_city" id="business_city" required>
+                                            <option selected>City: </option>
+                                            <% city.forEach(function(city){ %>
+                                                <option value='<%= city._id %>'><%= city.city_name %></option>
+                                                <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="business_type" id="business_type" required>
+                                            <option selected>Business Type: </option>
+                                            <% business_type.forEach(function(type){ %>
+                                            <option value='<%= type._id %>'><%= type.business_type_name %></option>
+                                            <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row mb-4">
+                                <div class="col-sm-3 col-md-12">
+                                    <div class="mb-3">
+                                        <select class="form-select form-select-lg mb-3" size="3" aria-label=".form-select-lg example" name="business_cat" id="business_cat" required>
+                                            <option selected>Business Category: </option>
+                                            <% business_category.forEach(function(category){ %>
+                                           <option value='<%= category._id %>'><%= category.business_category_name %></option>
+                                           <% }) %>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                           
+                            <div class="row mb-4 d-flex justify-content-end">
+                                <div class="col-sm-3 col-md-6">
+                                    <input type="submit" class="btn btn-danger" value="Register Business"></input>
+                                </div>
+                                <div class="col-sm-3 col-md-6 text-end">
+                                    <a href="/login" class="btn btn-primary" name="">Login</a>
+                                </div>
+                            </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!--Register business form ends -->
+    </div>
+    </div>
+
+
+    </div>
+</main>

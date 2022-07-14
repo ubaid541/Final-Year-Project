@@ -1,0 +1,14 @@
+.sidebar-nav {
+  width: 270px;
+}
+.sidebar-nav .sidebar-link {
+  display: flex;
+  align-items: center;
+}
+.sidebar-nav .sidebar-link .right-icon {
+  display: inline-flex;
+}
+.sidebar-nav .sidebar-link[aria-expanded=true] .right-icon {
+  transform: rotate(180deg);
+  transition: all ease 10s;
+}

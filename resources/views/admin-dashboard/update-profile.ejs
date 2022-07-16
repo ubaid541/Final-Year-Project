@@ -1,0 +1,231 @@
+<%- include('../partials/admin/top-bar') %> <%-
+include('../partials/admin/sidebar') %>
+
+<main class="mt-5 pt-3" style="padding-right: 1.5rem">
+    <div class="container-fluid">
+        <!-- page heading starts  -->
+        <div class="page-heading">
+            <div class="row">
+                <?php if (isset($_SESSION['status'])) {
+                    echo "<div class='alert alert-success' role='alert'>" . $_SESSION['status'] . "</div>";
+                    unset($_SESSION['status']);
+                } elseif (isset($_SESSION['error'])) {
+                    echo "<div class='alert alert-danger' role='alert'>" . $_SESSION['error'] . "</div>";
+                    unset($_SESSION['error']);
+                } ?>
+                <div class="
+                align-items-center
+                mb-1
+                mt-5
+              ">
+                    <h1 class="h3 mb-3 text-gray-800 text-center">
+                        Update Business Details
+                    </h1>
+
+                </div>
+            </div>
+        </div>
+        <!-- page heading ends  -->
+
+        <!-- Register business form-->
+        <div class="row justify-content-center">
+            <div class="col-md-8 mb-5">
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <% seller.forEach((seller)=>{ %>
+                                <form action="/update-business-profile" method="post" id="business_update_form">
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-6">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input type="hidden" name="seller_id" class="form-control" value="<%= seller._id %>">
+                                                    <input name="first_name" id="first_name" class="form-control" type="text" placeholder="First Name" value="<%= seller.fname %>" required />
+                                                    <label for="floatingInput">First Name</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 col-md-6">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="last_name" id="last_name" class="form-control" type="text" placeholder="Last Name" value="<%= seller.lname %>" required />
+                                                    <label for="floatingInput">Last Name</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-6">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="user_name" id="user_name" class="form-control" type="text" placeholder="User Name" value="<%= seller.username %>" required />
+                                                    <label for="floatingInput">Username</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 col-md-6">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="email" id="email" class="form-control" type="email" placeholder="Email" value="<%= seller.email %>" required />
+                                                    <label for="floatingInput">Email</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-6">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="phone" id="phone" class="form-control" type="tel" placeholder="Phone" value="<%= seller.phone %>" required />
+                                                    <label for="floatingInput">Phone</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <div class="col-sm-3 col-md-6">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="password" class="form-control" type="password" placeholder="Password" required />
+                                                    <label for="floatingInput">Password</label>
+                                                </div>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-6">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="address" id="address" class="form-control" type="text" placeholder="Address" value="<%= seller.address %>" required />
+                                                    <label for="floatingInput">Address</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-3 col-md-6">
+                                            <div class="mb-3">
+                                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="role" disabled>
+                                                    <option value="1">Seller</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-12">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="business_name" id="business_name" class="form-control" type="text" placeholder="Business Name" value="<%= seller.business_name %>" required />
+                                                    <label for="floatingInput">Business Name</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-12">
+                                            <div class="mb-3">
+                                                <select class="form-select form-select-lg mb-3" size="3" aria-label=".form-select-lg example" name="business_city" id="business_city" required>
+                                                    <option disabled>City: </option>
+                                                    <% b_city.forEach(function(b_city){ %>
+                                                    <%  if(seller.business_city === b_city._id ){ %>
+                                                    <option selected value='<%= b_city._id %>'><%= b_city.city_name %></option>
+                                                    <% } %>
+                                                    <% }) %>
+                                                    <?php
+                                                    $sql2 = "SELECT * FROM city";
+                                                    $result2 = mysqli_query($conn, $sql2) or die("City Query Failed.");
+
+                                                    if (mysqli_num_rows($result2) > 0) {
+                                                        while ($row2 = mysqli_fetch_assoc($result2)) {
+                                                            if ($row['city'] == $row2['city_id']) {
+                                                                $selected = "selected";
+                                                            } else {
+                                                                $selected = "";
+                                                            }
+                                                            echo "<option {$selected} value='{$row2['city_id']}'>{$row2['city_name']}</option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <input type="hidden" name="old_city" value="<?php echo $row['city']; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-12">
+                                            <div class="mb-3">
+                                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="business_type" id="business_type" required>
+                                                    <option disabled>Business Type: </option>
+                                                    <?php
+                                                    $sql3 = "SELECT * FROM business_type";
+                                                    $result3 = mysqli_query($conn, $sql3) or die("Query Failed.");
+
+                                                    if (mysqli_num_rows($result3) > 0) {
+                                                        while ($row3 = mysqli_fetch_assoc($result3)) {
+                                                            if ($row['business_Type'] == $row3['business_type_id']) {
+                                                                $selected = "selected";
+                                                            } else {
+                                                                $selected = "";
+                                                            }
+                                                            echo "<option {$selected} value='{$row3['business_type_id']}'>{$row3['business_type_name']}</option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <input type="hidden" name="old_business_type" value="<?php echo $row['business_Type']; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-12">
+                                            <div class="mb-3">
+                                                <select class="form-select form-select-lg mb-3" size="3" aria-label=".form-select-lg example" name="business_cat" id="business_cat" required>
+                                                    <option disabled>Business Category: </option>
+                                                    <?php
+                                                    $sql4 = "SELECT * FROM business_category";
+
+                                                    $result4 = mysqli_query($conn, $sql4) or die("Query Failed.");
+
+                                                    if (mysqli_num_rows($result4) > 0) {
+                                                        while ($row4 = mysqli_fetch_assoc($result4)) {
+                                                            if ($row['business_category'] == $row4['business_cat_id']) {
+                                                                $selected = "selected";
+                                                            } else {
+                                                                $selected = "";
+                                                            }
+                                                            echo "<option {$selected} value='{$row4['business_cat_id']}'>{$row4['business_cat_title']}</option>";
+                                                        }
+                                                    }
+                                                    ?>
+                                                </select>
+                                                <input type="hidden" name="old_business_cat" value="<?php echo $row['business_category']; ?>">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="input-group mb-3">
+                                            <div class="form-check">
+                                                <?php if ($row['tables'] == 1) { ?>
+                                                    <input class="form-check-input" name="tbl_reserve" type="checkbox" value="1" checked>
+                                                <?php } else { ?>
+                                                    <input class="form-check-input" name="tbl_reserve" type="checkbox" value="1">
+                                                <?php } ?>
+                                                <label class="form-check-label">
+                                                    Table reservation feature
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-4 ">
+                                        <div class="col-sm-3 col-md-6">
+                                            <input type="submit" id="submit" class="btn btn-danger" value="Update Business"></input>
+                                        </div>
+                                    </div>
+                    </div>
+                    </form>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+        <!--Register business form ends -->
+    </div>
+    </div>
+
+
+    </div>
+</main>

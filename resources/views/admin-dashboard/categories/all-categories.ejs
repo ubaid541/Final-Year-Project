@@ -1,6 +1,9 @@
 <%- include('../../partials/admin/top-bar') %> <%-
 include('../../partials/admin/sidebar') %>
 
+
+
+<!-- Category table starts here -->
 <main class="mt-5 pt-3">
     <div class="container-fluid">
         <!-- page heading starts  -->
@@ -28,22 +31,21 @@ include('../../partials/admin/sidebar') %>
                             </div>
                     <% } %>  
             </div>
-            <div class="row">
                 <div class="d-sm-flex align-items-center justify-content-between mb-1 mt-5">
                     <h1 class="h3 mb-0 text-gray-800">
-                        <i class="bi bi-filter"></i>Addons
+                        <i class="bi bi-filter"></i>Categories
                     </h1>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Addon
+                            Category
                         </li>
                     </ol>
                 </div>
             </div>
         </div>
         <!-- page heading ends  -->
-        <!-- Addons table starts here -->
+        <!-- Category table starts here -->
         <div class="row mb-4">
             <div class="col-md-12">
                 <div class="card">
@@ -52,7 +54,7 @@ include('../../partials/admin/sidebar') %>
                             <div class="col-8 mb-4 mb-lg-1">
                                 <form class="d-flex ms-auto">
                                     <div class="input-group my-3 my-lg-0">
-                                        <input type="text" id="searchAddon" onkeyup="myFunction()" class="form-control" placeholder="Search Addon" aria-label="Search Addon" aria-describedby="button-addon2" />
+                                        <input type="text" id="searchCat" onkeyup="myFunction()" class="form-control" placeholder="Search Category" aria-label="Search Category" aria-describedby="button-addon2" />
                                         <button class="btn btn-primary" type="button" id="button-addon2">
                                             <i class="bi bi-search"></i>
                                         </button>
@@ -62,49 +64,38 @@ include('../../partials/admin/sidebar') %>
                             <div class="col-4 mb-3 mb-lg-0">
                                 <div class="d-grid gap-2">
                                     <% if(user.role === 'seller'){  %>
-                                        <a data-bs-toggle="modal" data-bs-target="#addAddon" class="btn btn-primary btn-block" type="button">
+                                        <a data-bs-toggle="modal" data-bs-target="#addCat" class="btn btn-primary btn-block" type="button">
                                             <i class="bi bi-plus-circle-fill"></i>
-                                            Add Addon
+                                            Add Category
                                         </a>
-                                
+                                 
                                 </div>
                             </div>
-                            <!-- add addon modal starts-->
-                            <div class="modal fade" id="addAddon" tabindex="-1" aria-labelledby="addAddonLabel" aria-hidden="true">
+                            <!-- add cat modal starts-->
+                            <div class="modal fade" id="addCat" tabindex="-1" aria-labelledby="addCatLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="addAddonLabel">
-                                                Add Addon
+                                            <h5 class="modal-title" id="addCatLabel">
+                                                Add Category
                                             </h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <form action="/add-addon" method="post" id="cat_form">
-                                                        <div class="row">
-                                                            <input type="hidden" name="seller_id" value="<%= user._id %>">
-                                                            <div class="col-sm-3 col-md-12">
-                                                                <div class="mb-3">
-                                                                    <div class="form-floating">
-                                                                        <input name="addon_name" class="form-control" type="text" placeholder="Addon Name" required />
-                                                                        <label for="floatingInput">Addon Name</label>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
+                                                    <form action="/add-category" method="post" id="cat_form">
+                                                        <input type="hidden" name="seller_id" value="<%= user._id %>">
                                                         <div class="row">
                                                             <div class="col-sm-3 col-md-12">
                                                                 <div class="mb-3">
                                                                     <div class="form-floating">
-                                                                        <input name="addon_price" class="form-control" type="number" placeholder="Addon Price" required />
-                                                                        <label for="floatingInput">Price</label>
+                                                                        <input name="cat_name" class="form-control" type="text" placeholder="Category Name" required />
+                                                                        <label for="floatingInput">Category</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -112,108 +103,93 @@ include('../../partials/admin/sidebar') %>
                                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
                                                 Cancel
                                             </button>
-                                            <button type="submit" class="btn btn-primary">
+                                            <button type="submit" value="Add_category" class="btn btn-primary">
                                                 Save changes
                                             </button>
+                                            </form>
                                         </div>
-                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <!-- add addon modal ends-->
+                            <!-- add cat modal ends-->
                             <% } %>
                         </div>
                     </div>
                     <div class="card-body">
-                            <div class="table-responsive" id="addonTable">
+                            <div class="table-responsive" id="proTable">
                                 <table class="table data-table table-striped">
                                     <thead>
                                         <tr>
                                             <th scope='col'>#</th>
                                             <th scope='col'>Name</th>
-                                            <th scope='col'>Price</th>
+                                            <!-- <th scope='col'>Number of products</th> -->
                                             <th scope='col'>Date</th>
                                             <th scope='col'>Edit</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% if(addon.length){ var i = 1 %> <% addon.forEach((addon)=>{ %>
+                                        <% if(category.length){ var i = 1 %> <% category.forEach((category)=>{ %>
                                             <tr>
                                                 <th scope="row"><%= i++ %></th>
                                                 <td>
-                                                  <%= addon.addon_name %>
+                                                    <%= category.cat_name %>
                                                 </td>
-                                                <td>
-                                                    <%= addon.addon_price %>
-                                                </td>
-                                                <td><%= moment(addon.createdAt).format('hh:mm A') %></td>
+                                                <!-- <td>
+                                                    
+                                                </td> -->
+                                                <td><%= moment(category.createdAt).format('hh:mm A') %></td>
                                                 <td>
                                                     <div class="dropdown">
                                                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <i class="bi bi-gear-fill"></i>
                                                         </button>
                                                         <ul class="dropdown-menu shadow-lg rounded mt-1" aria-labelledby="dropdownMenuButton1">
-                                                           <% if(user.role === 'seller') { %>
+                                                            <% if(user.role === 'seller') { %>
                                                                 <li>
-                                                                    <a class="dropdown-item btn" href='/edit-addon/<%= addon._id %>'>Edit</a>
+                                                                    <a class="dropdown-item btn" href='/edit-cat/<%= category._id %>'>Edit</a>
                                                                 </li>
                                                           <% } %>
-                                                            <li>
-                                                                <a class="dropdown-item" href='/delete-addon/<%= addon._id %>'>Delete</a>
-                                                            </li>
+                                                          <li>
+                                                            <a class="dropdown-item" href='/delete-cat/<%= category._id %>'>Delete</a>
+                                                        </li>
                                                         </ul>
-
                                                     </div>
                                                 </td>
                                             </tr>
                                             <% }) %> <% } else { %>
                                                 <tr>
-                                                  <td colspan="6" class="h1 text-center">No addons found</td>
+                                                  <td colspan="6" class="h1 text-center">No Categories found</td>
                                                 </tr>
                                                 <% } %>
                                     </tbody>
                                 </table>
                             </div>
-
-                        <!-- select query for pagination -->
-                            <!-- <div class="row mt-2">
-                                <ul class="pagination justify-content-center">
-                                    <?php if ($page > 1) {
-                                        echo " <li class='page-item'>
-                                    <a class='page-link' href='addons.php?page=" . ($page - 1) . "' aria-label='Previous'>
-                                        <span aria-hidden='true'>&laquo;</span>
-                                    </a>
-                                </li>";
-                                    }
-
-                                    if ($total_record > $limit) {
-                                        for ($i = 1; $i <= $total_page; $i++) {
-                                            if ($i == $page) {
-                                                $cls = 'active';
-                                            } else {
-                                                $cls = '';
-                                            }
-                                            echo "<li class='page-item {$cls}'>
-                                        <a class='page-link' href='addons.php?page=" . $i . "'>$i</a>
-                                    </li>";
-                                        }
-                                    }
-
-                                    if ($total_page > $page) {
-                                        echo " <li class='page-item'>
-                                    <a class='page-link' href='addons.php?page=" . ($page + 1) . "' aria-label='Next'>
-                                        <span aria-hidden='true'>&raquo;</span>
-                                    </a>
-                                </li>";
-                                    }
-                                    ?>
-                                </ul>
-                            <?php } ?>
-                            </div> -->
                     </div>
                 </div>
             </div>
         </div>
-        <!-- Addons table ends here -->
+        <!-- Category table ends here -->
     </div>
 </main>
+<!-- category table ends here -->
+<script>
+    // search inside category table
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchCat");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("proTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

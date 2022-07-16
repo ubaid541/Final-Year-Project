@@ -1,0 +1,73 @@
+<%- include('../../partials/admin/top-bar') %> <%-
+include('../../partials/admin/sidebar') %>
+
+<main class="mt-5 pt-3" style="padding-right: 1.5rem">
+    <div class="container-fluid">
+        <!-- page heading starts  -->
+        <div class="page-heading">
+            <div class="row">
+                <div class="
+                d-sm-flex
+                align-items-center
+                justify-content-between
+                mb-1
+                mt-5
+              ">
+                    <h1 class="h3 mb-0 text-gray-800">
+                        <i class="bi bi-pencil-fill me-2"></i>Edit Attribue
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Attributes
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- page heading ends  -->
+
+        <!-- Edite addon form starts -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <% attr.forEach((attr)=>{ %>
+                                <form action="/edit-attr" method="post" id="addon_form">
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-6">
+                                            <div class="mb-3">
+                                                <input type="hidden" name="attr_ID" class="form-control" value="<%= attr._id %>">
+                                                <div class="form-floating">
+                                                    <input name="attr_name" class="form-control" type="text" placeholder="Addon Name" value="<%= attr.attr_name %>" required />
+                                                    <label for="floatingInput">Attribute Name</label>
+                                                </div>
+
+                                            </div>
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="attr_price" class="form-control" type="number" placeholder="Addon Price" value="<%= attr.attr_price %>" required />
+                                                    <label for="floatingInput">Addon Price</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row mb-4">
+                                        <div class="col-sm-3 col-md-6">
+                                            <input type="submit" class="btn btn-danger" value="Submit" ></input>
+                                        </div>
+                                    </div>
+                                </form>
+                      <% }) %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edite addon form ends -->
+    </div>
+
+</main>
+

@@ -115,6 +115,21 @@ function authController(){
             })
            
         },
+        async updateProfile(req,res){
+            var id = req.params.id
+        const seller = await Seller.find( { _id: id } )
+
+        let business_category = await B_category.find()
+        let business_type = await B_type.find()
+        let city = await City.find()
+
+        return res.render('./admin-dashboard/update-profile', {
+            seller : seller,
+            business_category : business_category,
+            business_type : business_type,
+            b_city : city
+        })
+        },
         logout(req,res,next){
             req.logout(function(err){
                 if(err){

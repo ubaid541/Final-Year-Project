@@ -1,6 +1,7 @@
 <%- include('../../partials/admin/top-bar') %> <%-
 include('../../partials/admin/sidebar') %>
 
+
 <main class="mt-5 pt-3">
     <div class="container-fluid">
         <!-- page heading starts  -->
@@ -31,12 +32,12 @@ include('../../partials/admin/sidebar') %>
             <div class="row">
                 <div class="d-sm-flex align-items-center justify-content-between mb-1 mt-5">
                     <h1 class="h3 mb-0 text-gray-800">
-                        <i class="bi bi-filter"></i>Addons
+                        <i class="bi bi-filter"></i>Attributes
                     </h1>
                     <ol class="breadcrumb">
                         <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
                         <li class="breadcrumb-item active" aria-current="page">
-                            Addon
+                            Attributes
                         </li>
                     </ol>
                 </div>
@@ -52,7 +53,7 @@ include('../../partials/admin/sidebar') %>
                             <div class="col-8 mb-4 mb-lg-1">
                                 <form class="d-flex ms-auto">
                                     <div class="input-group my-3 my-lg-0">
-                                        <input type="text" id="searchAddon" onkeyup="myFunction()" class="form-control" placeholder="Search Addon" aria-label="Search Addon" aria-describedby="button-addon2" />
+                                        <input type="text" id="searchAttributes" onkeyup="myFunction()" class="form-control" placeholder="Search Attributes" aria-label="Search Attributes" aria-describedby="button-addon2" />
                                         <button class="btn btn-primary" type="button" id="button-addon2">
                                             <i class="bi bi-search"></i>
                                         </button>
@@ -62,34 +63,33 @@ include('../../partials/admin/sidebar') %>
                             <div class="col-4 mb-3 mb-lg-0">
                                 <div class="d-grid gap-2">
                                     <% if(user.role === 'seller'){  %>
-                                        <a data-bs-toggle="modal" data-bs-target="#addAddon" class="btn btn-primary btn-block" type="button">
+                                        <a data-bs-toggle="modal" data-bs-target="#addAttrs" class="btn btn-primary btn-block" type="button">
                                             <i class="bi bi-plus-circle-fill"></i>
-                                            Add Addon
+                                            Add Attribute
                                         </a>
-                                
                                 </div>
                             </div>
-                            <!-- add addon modal starts-->
-                            <div class="modal fade" id="addAddon" tabindex="-1" aria-labelledby="addAddonLabel" aria-hidden="true">
+                            <!-- add attribute modal starts-->
+                            <div class="modal fade" id="addAttrs" tabindex="-1" aria-labelledby="addAttrsLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="addAddonLabel">
-                                                Add Addon
+                                            <h5 class="modal-title" id="addAttrsLabel">
+                                                Add Attribute
                                             </h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <form action="/add-addon" method="post" id="cat_form">
+                                                    <form action="/add-attr" method="post" id="cat_form">
+                                                        <input type="hidden" name="seller_id" value="<%= user._id %>">
                                                         <div class="row">
-                                                            <input type="hidden" name="seller_id" value="<%= user._id %>">
                                                             <div class="col-sm-3 col-md-12">
                                                                 <div class="mb-3">
                                                                     <div class="form-floating">
-                                                                        <input name="addon_name" class="form-control" type="text" placeholder="Addon Name" required />
-                                                                        <label for="floatingInput">Addon Name</label>
+                                                                        <input name="attr_name" class="form-control" type="text" placeholder="Attribute Name" required />
+                                                                        <label for="floatingInput">Attribute Name</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -98,13 +98,12 @@ include('../../partials/admin/sidebar') %>
                                                             <div class="col-sm-3 col-md-12">
                                                                 <div class="mb-3">
                                                                     <div class="form-floating">
-                                                                        <input name="addon_price" class="form-control" type="number" placeholder="Addon Price" required />
+                                                                        <input name="attr_price" class="form-control" type="number" placeholder="Attribute Price" required />
                                                                         <label for="floatingInput">Price</label>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -120,12 +119,13 @@ include('../../partials/admin/sidebar') %>
                                     </div>
                                 </div>
                             </div>
-                            <!-- add addon modal ends-->
+                            <!-- add attribute modal ends-->
                             <% } %>
                         </div>
                     </div>
                     <div class="card-body">
-                            <div class="table-responsive" id="addonTable">
+                       
+                            <div class="table-responsive" id="attrTable">
                                 <table class="table data-table table-striped">
                                     <thead>
                                         <tr>
@@ -137,79 +137,44 @@ include('../../partials/admin/sidebar') %>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <% if(addon.length){ var i = 1 %> <% addon.forEach((addon)=>{ %>
+                                        <% if(attr.length){ var i = 1 %> <% attr.forEach((attr)=>{ %>
                                             <tr>
                                                 <th scope="row"><%= i++ %></th>
                                                 <td>
-                                                  <%= addon.addon_name %>
+                                                    <%= attr.attr_name %>
                                                 </td>
                                                 <td>
-                                                    <%= addon.addon_price %>
+                                                    <%= attr.attr_price %>
                                                 </td>
-                                                <td><%= moment(addon.createdAt).format('hh:mm A') %></td>
+                                                <td><%= moment(attr.createdAt).format('hh:mm A') %></td>
                                                 <td>
+
                                                     <div class="dropdown">
                                                         <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                                             <i class="bi bi-gear-fill"></i>
                                                         </button>
                                                         <ul class="dropdown-menu shadow-lg rounded mt-1" aria-labelledby="dropdownMenuButton1">
-                                                           <% if(user.role === 'seller') { %>
+                                                            <% if(user.role === 'seller') { %>
                                                                 <li>
-                                                                    <a class="dropdown-item btn" href='/edit-addon/<%= addon._id %>'>Edit</a>
+                                                                    <a class="dropdown-item btn" href='/edit-attr/<%= attr._id %>'>Edit</a>
                                                                 </li>
                                                           <% } %>
-                                                            <li>
-                                                                <a class="dropdown-item" href='/delete-addon/<%= addon._id %>'>Delete</a>
-                                                            </li>
+                                                          <li>
+                                                            <a class="dropdown-item" href='/delete-attr/<%= attr._id %>'>Delete</a>
+                                                        </li>
                                                         </ul>
-
                                                     </div>
+
                                                 </td>
                                             </tr>
                                             <% }) %> <% } else { %>
                                                 <tr>
-                                                  <td colspan="6" class="h1 text-center">No addons found</td>
+                                                  <td colspan="6" class="h1 text-center">No attributes found</td>
                                                 </tr>
                                                 <% } %>
                                     </tbody>
                                 </table>
                             </div>
-
-                        <!-- select query for pagination -->
-                            <!-- <div class="row mt-2">
-                                <ul class="pagination justify-content-center">
-                                    <?php if ($page > 1) {
-                                        echo " <li class='page-item'>
-                                    <a class='page-link' href='addons.php?page=" . ($page - 1) . "' aria-label='Previous'>
-                                        <span aria-hidden='true'>&laquo;</span>
-                                    </a>
-                                </li>";
-                                    }
-
-                                    if ($total_record > $limit) {
-                                        for ($i = 1; $i <= $total_page; $i++) {
-                                            if ($i == $page) {
-                                                $cls = 'active';
-                                            } else {
-                                                $cls = '';
-                                            }
-                                            echo "<li class='page-item {$cls}'>
-                                        <a class='page-link' href='addons.php?page=" . $i . "'>$i</a>
-                                    </li>";
-                                        }
-                                    }
-
-                                    if ($total_page > $page) {
-                                        echo " <li class='page-item'>
-                                    <a class='page-link' href='addons.php?page=" . ($page + 1) . "' aria-label='Next'>
-                                        <span aria-hidden='true'>&raquo;</span>
-                                    </a>
-                                </li>";
-                                    }
-                                    ?>
-                                </ul>
-                            <?php } ?>
-                            </div> -->
                     </div>
                 </div>
             </div>
@@ -217,3 +182,25 @@ include('../../partials/admin/sidebar') %>
         <!-- Addons table ends here -->
     </div>
 </main>
+
+<script>
+    // search inside attribute table
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("searchAttributes");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("attrTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[0];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>

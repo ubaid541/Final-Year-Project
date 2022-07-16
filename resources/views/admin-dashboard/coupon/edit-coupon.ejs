@@ -1,0 +1,115 @@
+<%- include('../../partials/admin/top-bar') %> <%-
+include('../../partials/admin/sidebar') %>
+
+<main class="mt-5 pt-3" style="padding-right: 1.5rem">
+    <div class="container-fluid">
+        <!-- page heading starts  -->
+        <div class="page-heading">
+            <div class="row">
+                <div class="
+                d-sm-flex
+                align-items-center
+                justify-content-between
+                mb-1
+                mt-5
+              ">
+                    <h1 class="h3 mb-0 text-gray-800">
+                        <i class="bi bi-pencil-fill me-2"></i>Edit Coupon
+                    </h1>
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Coupon
+                        </li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- page heading ends  -->
+
+        <!-- Update coupon form starts -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-5">
+                    <div class="card-body">
+                        <% coupon.forEach((coupon)=>{ %>
+                                <form action="/edit-coupon" method="post" id="cat_form" >
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-12">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input type="hidden" name="cpn_id" class="form-control" value="<%= coupon._id %>">
+                                                    <input name="coupon_name" class="form-control" type="text" placeholder="Coupon Name" value="<%= coupon.coupon_name %>" required />
+                                                    <label for="floatingInput">Coupon Name</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-12">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <textarea name="coupon_desc" class="form-control" type="text" placeholder="Description" style="height: 80px" required><%= coupon.coupon_desc %></textarea>
+                                                    <label for="floatingInput">Description</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-12">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="coupon_value" class="form-control" type="number" placeholder="Coupon value" value="<%= coupon.coupon_value %>" required />
+                                                    <label for="floatingInput">Value</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-12">
+                                            <div class="mb-3">
+                                                <div class="form-floating">
+                                                    <input name="cpn_exp_date" class="form-control" type="date" placeholder="Coupon expiry date" value="<%= moment(coupon.coupon_expired).format('YYYY-MM-DD') %>" required />
+                                                    <label for="floatingInput">Expiry Date</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-12">
+                                            <div class="mb-3">
+                                                <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="cpn_status">
+                                                    <%
+                                                    if (coupon.coupon_status == 0) { %>
+                                                        <option value="0" selected>Active</option>
+                                                        <option value="1">Disable</option>
+                                                        <% } else { %>
+                                                        <option value="0">Active</option>
+                                                        <option value="1" selected>Disable</option>
+                                                        <% } %>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-sm-3 col-md-6">
+                                            <input type="submit" class="btn btn-danger" value="Submit"></input>
+                                        </div>
+                                    </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+            <% }) %>
+        </div>
+    </div>
+    </div>
+    </div>
+    </div>
+
+    <!-- Update coupon form ends -->
+    </div>
+    <?php
+
+    ?>
+</main>

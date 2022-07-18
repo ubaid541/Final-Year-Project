@@ -5,7 +5,7 @@ const catSchema = new Schema({
     cat_name : {type: String, required:true,unique: true},
     seller_id : {
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'businesses',
+        ref: 'Business',
         required:true
     },
  }, {timestamps: true})

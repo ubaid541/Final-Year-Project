@@ -55,13 +55,7 @@ function allAddons(){
             return res.render('./admin-dashboard/addons/edit-addon', {addon : addon})
         },
         async posteditAddon(req,res){
-            // try{
-            //     const result = await Addon.findByIdAndUpdate(req.params.id,req.body)
-            //     return res.redirect('/addons')
-            // }catch(error){
-            //     console.log(error);
-            // }
-
+            
             const {addon_name,addon_price,addon_ID} = req.body
             Addon.updateOne({_id : addon_ID},{$set : {addon_name : addon_name,addon_price : addon_price}}).then((addon)=>{
                 req.flash('success','Addon Updated successfully.')

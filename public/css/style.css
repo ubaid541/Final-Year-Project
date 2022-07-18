@@ -12,3 +12,41 @@
   transform: rotate(180deg);
   transition: all ease 10s;
 }
+
+.margin-left {
+  margin-left: 0.5rem;
+}
+
+.table img {
+  height: 35px;
+  border-radius: 5px;
+  margin-right: 5px;
+}
+.table img .avatar {
+  height: 2.65rem;
+  width: 2.65rem;
+  border-radius: 50%;
+}
+
+@media (min-width: 992px) {
+  body {
+    overflow: auto !important;
+  }
+  main {
+    margin-left: 19rem;
+    margin-right: 2rem;
+    padding-right: 1.5rem;
+  }
+  main .container-fluid .border-left-primary {
+    border-left: 0.25rem solid #4e73df !important;
+  }
+  .offcanvase-backdrop::before {
+    display: none;
+  }
+  .sidebar-nav {
+    transform: none;
+    visibility: visible;
+    top: 56px;
+    height: calc(100% - 56px);
+  }
+}

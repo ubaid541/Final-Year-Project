@@ -1,0 +1,203 @@
+<%- include('../../partials/admin/top-bar') %> <%-
+include('../../partials/admin/sidebar') %>
+
+<main class="mt-5 pt-3">
+  <div class="container-fluid">
+    <!-- page heading starts  -->
+    <div class="page-heading">
+      <div class="row">
+        <% if(messages.error) { %>
+        <div class="row">
+          <div class="row col-4 text-center"></div>
+          <div class="row col-6 text-center">
+            <div class="alert alert-danger" role="alert">
+              <%= messages.error %>
+            </div>
+          </div>
+          <div class="row col-4 text-center"></div>
+        </div>
+        <% } else if(messages.success){ %>
+        <div class="row">
+          <div class="row col-4 text-center"></div>
+          <div class="row col-6 text-center">
+            <div class="alert alert-success" role="alert">
+              <%= messages.success %>
+            </div>
+          </div>
+          <div class="row col-4 text-center"></div>
+        </div>
+        <% } %>
+      </div>
+      <div class="row">
+        <div
+          class="d-sm-flex align-items-center justify-content-between mb-1 mt-5"
+        >
+          <h1 class="h3 mb-0 text-gray-800">
+            <i class="bi bi-filter"></i>Products<span
+              class="badge bg-secondary"
+              style="margin-left: 0.5rem"
+            ></span>
+          </h1>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Product</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- page heading ends  -->
+    <!-- Product table starts here -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row" style="width: 100%">
+              <div class="col-8 mb-4 mb-lg-1">
+                <form class="d-flex ms-auto">
+                  <div class="input-group my-3 my-lg-0">
+                    <input
+                      type="text"
+                      id="searchPro"
+                      onkeyup="myFunction()"
+                      class="form-control"
+                      placeholder="Search Product"
+                      aria-label="Search Product"
+                      aria-describedby="button-addon2"
+                    />
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      id="button-addon2"
+                    >
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div class="col-4 mb-3 mb-lg-0">
+                <div class="d-grid gap-2">
+                  <% if(user.role === 'seller'){ %>
+                  <a
+                    href="/add-product"
+                    class="btn btn-primary btn-block"
+                    type="button"
+                  >
+                    <i class="bi bi-plus-circle-fill"></i>
+                    Add New Product
+                  </a>
+                  <% } %>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive" id="proTable">
+              <table class="table data-table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col"><i class="bi bi-image-fill"></i></th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Date</th>
+                    <% if(user.role === 'admin'){ %>
+                    <th scope="col">Business</th>
+                    <% } %>
+                    <th scope="col">Edit</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(product.length){ var i = 1 %> <%
+                  product.forEach((product)=>{ %>
+                  <tr>
+                    <th scope="row"><%= i++ %></th>
+                    <td><%= product.pro_name %></td>
+                    <td>
+                      <img
+                        src="images/<%= product.pro_image %>"
+                        alt="product image"
+                      />
+                    </td>
+                    <td><%= product.pro_price %>/Rs</td>
+                    <td><%= product.pro_category.cat_name %></td>
+                    <td>
+                      <%= moment(product.createdAt).format('YYYY-MM-DD') %>
+                    </td>
+                    <% if(user.role === 'admin'){ %>
+                    <td><%= product.seller_id.business_name %></td>
+                    <% } %>
+                    <td>
+                      <div class="dropdown">
+                        <button
+                          class="btn btn-secondary btn-sm dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="bi bi-gear-fill"></i>
+                        </button>
+                        <ul
+                          class="dropdown-menu shadow-lg rounded mt-1"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <% if(user.role === 'seller'){ %>
+                          <li>
+                            <a
+                              class="dropdown-item btn"
+                              href="/edit-product/<%= product._id %>"
+                              >Edit</a
+                            >
+                          </li>
+                          <% } %>
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/delete-product/<%= product._id %>"
+                              >Delete</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+                  <% }) %> <% } else { %>
+                  <tr>
+                    <td colspan="6" class="h1 text-center">
+                      No products found
+                    </td>
+                  </tr>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Product table ends here -->
+  </div>
+</main>
+
+<script>
+  // search inside product table
+  function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchPro");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("proTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>

@@ -3,6 +3,7 @@ const addonController = require('../app/http/controllers/admin/addons')
 const attrController = require('../app/http/controllers/admin/attributes')
 const catController = require('../app/http/controllers/admin/categories')
 const couponController = require('../app/http/controllers/admin/coupons')
+const productController = require('../app/http/controllers/admin/products')
 
 const authController = require('../app/http/controllers/admin/authController')
 
@@ -39,11 +40,17 @@ function initRoutes(app){
     app.get('/edit-coupon/:id',user_role,couponController().editCoupon);
     app.post('/edit-coupon',user_role,couponController().posteditCoupon);
 
-    app.get('/products',auth,couponController().index);
-    app.post('/add-coupon',user_role,couponController().addCoupon);
-    app.get('/delete-coupon/:id',auth,couponController().deleteCoupon);
-    app.get('/edit-coupon/:id',user_role,couponController().editCoupon);
-    app.post('/edit-coupon',user_role,couponController().posteditCoupon);
+    app.get('/products',auth,productController().index);
+    app.get('/add-product',user_role,productController().addProduct);
+    app.post('/add-product',user_role,productController().postAddProduct);
+    app.get('/delete-product/:pid',auth,productController().deleteProduct);
+    app.get('/edit-product/:id',user_role,productController().editProduct);
+    app.post('/edit-product',user_role,productController().posteditProduct);
+
+    // seller routes ends
+
+    // Customer routes
+    app.get('/',homeController().index);
 
 
 

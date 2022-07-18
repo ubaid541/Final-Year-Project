@@ -116,7 +116,7 @@ function authController(){
            
         },
         async updateProfile(req,res){
-            var id = req.params.id
+        var id = req.params.id
         const seller = await Seller.find( { _id: id } )
 
         let business_category = await B_category.find()

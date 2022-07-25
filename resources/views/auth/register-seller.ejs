@@ -90,7 +90,7 @@
                                 </div>
                             </div>
                             <div class="row mb-4">
-                                <div class="col-sm-3 col-md-6">
+                                <div class="col-sm-3 col-md-12">
                                     <div class="mb-3">
                                         <div class="form-floating">
                                             <input name="address" class="form-control" type="text" placeholder="Address" value="<%= messages.address %>" required />
@@ -98,13 +98,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-3 col-md-6">
-                                    <div class="mb-3">
-                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="role" disabled>
-                                            <option value="1">Seller</option>
-                                        </select>
-                                    </div>
-                                </div>
+                                <input type="hidden" value="seller" name="role">
                             </div>
                             <div class="row mb-4">
                                 <div class="col-sm-3 col-md-12">
@@ -119,7 +113,7 @@
                             <div class="row mb-4">
                                 <div class="col-sm-3 col-md-12">
                                     <div class="mb-3">
-                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="business_city" id="business_city" required>
+                                        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="city" id="business_city" required>
                                             <option selected>City: </option>
                                             <% city.forEach(function(city){ %>
                                                 <option value='<%= city._id %>'><%= city.city_name %></option>

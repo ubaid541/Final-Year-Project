@@ -22,8 +22,6 @@ mongoose.connect(url , {useNewUrlParser : true},(error)=>{
         console.log("Not connected.");
     }
 });
-// const connection = mongoose.connection;
-
 
 
 // session store
@@ -40,6 +38,7 @@ app.use(session({
     saveUninitialized: false,
     cookie: {maxAge: 1000*60*60*24} //24 hours
 }))
+
 
 // passport config
 const passportInit = require('./app/config/passport')
@@ -62,7 +61,6 @@ app.use(express.json())
 
 // global middleware
 app.use((req,res,next)=>{
-  //  res.locals.session = req.session
     res.locals.user = req.user
     // pass the request
     next()

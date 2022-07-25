@@ -1,0 +1,42 @@
+<%- include('../partials/customer/top-bar') %>
+
+<section id="featured-products" class="featured-products">
+  <div class="container">
+    <div class="row mt-5 mb-5">
+      <div class="heading mt-5">
+        <h4 class="text-center">
+          <% city.forEach((city)=>{ %> City :
+          <span class="text-danger"><%= city.city_name %></span> <% }) %>
+        </h4>
+        <hr class="mx-5 mb-5" />
+      </div>
+      <div class="row">
+        <% if(business.length) { business.forEach((business)=>{ %>
+        <div class="col-sm-4 mb-4">
+          <div class="card" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="card-title"><%= business.business_name %></h5>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <p>Category:</p>
+                <h6 class="fw-bold">
+                  <%= business.business_category.business_category_name %>
+                </h6>
+              </li>
+            </ul>
+            <div class="card-body">
+              <!-- <a href="#" class="card-link"></a> -->
+              <a href="/single-business/<%= business._id %>" class="card-link"
+                >Visit</a
+              >
+            </div>
+          </div>
+        </div>
+        <% }) } else { %>
+        <h2>No businesses in this city</h2>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>

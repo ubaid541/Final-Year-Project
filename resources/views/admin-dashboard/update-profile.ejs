@@ -6,13 +6,28 @@ include('../partials/admin/sidebar') %>
         <!-- page heading starts  -->
         <div class="page-heading">
             <div class="row">
-                <?php if (isset($_SESSION['status'])) {
-                    echo "<div class='alert alert-success' role='alert'>" . $_SESSION['status'] . "</div>";
-                    unset($_SESSION['status']);
-                } elseif (isset($_SESSION['error'])) {
-                    echo "<div class='alert alert-danger' role='alert'>" . $_SESSION['error'] . "</div>";
-                    unset($_SESSION['error']);
-                } ?>
+                <% if(messages.error) { %>
+                    <div class="row">
+                    <div class="row col-4 text-center">
+                    </div>
+                    <div class="row col-6 text-center">
+                        <div class='alert alert-danger' role='alert'><%= messages.error %></div>
+                    </div>
+                    <div class="row col-4 text-center">
+                    </div>
+                    </div>
+                    <% } else if(messages.success){ %> 
+                        <div class="row">
+                            <div class="row col-4 text-center">
+                            </div>
+                            <div class="row col-6 text-center">
+                                <div class='alert alert-success' role='alert'><%= messages.success %></div>
+                            </div>
+                            <div class="row col-4 text-center">
+                            </div>
+                            </div>
+                    <% } %>  
+            </div>
                 <div class="
                 align-items-center
                 mb-1
@@ -39,7 +54,7 @@ include('../partials/admin/sidebar') %>
                                             <div class="mb-3">
                                                 <div class="form-floating">
                                                     <input type="hidden" name="seller_id" class="form-control" value="<%= seller._id %>">
-                                                    <input name="first_name" id="first_name" class="form-control" type="text" placeholder="First Name" value="<%= seller.fname %>" required />
+                                                    <input name="fname" id="fname" class="form-control" type="text" placeholder="First Name" value="<%= seller.fname %>" required />
                                                     <label for="floatingInput">First Name</label>
                                                 </div>
                                             </div>
@@ -47,7 +62,7 @@ include('../partials/admin/sidebar') %>
                                         <div class="col-sm-3 col-md-6">
                                             <div class="mb-3">
                                                 <div class="form-floating">
-                                                    <input name="last_name" id="last_name" class="form-control" type="text" placeholder="Last Name" value="<%= seller.lname %>" required />
+                                                    <input name="lname" id="lname" class="form-control" type="text" placeholder="Last Name" value="<%= seller.lname %>" required />
                                                     <label for="floatingInput">Last Name</label>
                                                 </div>
                                             </div>
@@ -57,7 +72,7 @@ include('../partials/admin/sidebar') %>
                                         <div class="col-sm-3 col-md-6">
                                             <div class="mb-3">
                                                 <div class="form-floating">
-                                                    <input name="user_name" id="user_name" class="form-control" type="text" placeholder="User Name" value="<%= seller.username %>" required />
+                                                    <input name="username" id="username" class="form-control" type="text" placeholder="User Name" value="<%= seller.username %>" required />
                                                     <label for="floatingInput">Username</label>
                                                 </div>
                                             </div>
@@ -122,25 +137,14 @@ include('../partials/admin/sidebar') %>
                                                 <select class="form-select form-select-lg mb-3" size="3" aria-label=".form-select-lg example" name="business_city" id="business_city" required>
                                                     <option disabled>City: </option>
                                                     <% b_city.forEach(function(b_city){ %>
-                                                    <%  if(seller.business_city === b_city._id ){ %>
-                                                    <option selected value='<%= b_city._id %>'><%= b_city.city_name %></option>
-                                                    <% } %>
+                                                    <%  if(JSON.stringify(seller.business_city) === JSON.stringify(b_city._id) ){
+                                                        var selected = 'selected'
+                                                          } else{
+                                                            var selected = ''
+                                                          }
+                                                           %>
+                                                    <option <%= selected %> value='<%= b_city._id %>'><%= b_city.city_name %></option>
                                                     <% }) %>
-                                                    <?php
-                                                    $sql2 = "SELECT * FROM city";
-                                                    $result2 = mysqli_query($conn, $sql2) or die("City Query Failed.");
-
-                                                    if (mysqli_num_rows($result2) > 0) {
-                                                        while ($row2 = mysqli_fetch_assoc($result2)) {
-                                                            if ($row['city'] == $row2['city_id']) {
-                                                                $selected = "selected";
-                                                            } else {
-                                                                $selected = "";
-                                                            }
-                                                            echo "<option {$selected} value='{$row2['city_id']}'>{$row2['city_name']}</option>";
-                                                        }
-                                                    }
-                                                    ?>
                                                 </select>
                                                 <input type="hidden" name="old_city" value="<?php echo $row['city']; ?>">
                                             </div>
@@ -151,21 +155,15 @@ include('../partials/admin/sidebar') %>
                                             <div class="mb-3">
                                                 <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" name="business_type" id="business_type" required>
                                                     <option disabled>Business Type: </option>
-                                                    <?php
-                                                    $sql3 = "SELECT * FROM business_type";
-                                                    $result3 = mysqli_query($conn, $sql3) or die("Query Failed.");
-
-                                                    if (mysqli_num_rows($result3) > 0) {
-                                                        while ($row3 = mysqli_fetch_assoc($result3)) {
-                                                            if ($row['business_Type'] == $row3['business_type_id']) {
-                                                                $selected = "selected";
-                                                            } else {
-                                                                $selected = "";
-                                                            }
-                                                            echo "<option {$selected} value='{$row3['business_type_id']}'>{$row3['business_type_name']}</option>";
-                                                        }
-                                                    }
-                                                    ?>
+                                                    <% business_type.forEach(function(business_type){ %>
+                                                        <%  if(JSON.stringify(seller.business_type) === JSON.stringify(business_type._id) ){
+                                                            var selected = 'selected'
+                                                              } else{
+                                                                var selected = ''
+                                                              }
+                                                               %>
+                                                        <option <%= selected %> value='<%= business_type._id %>'><%= business_type.business_type_name %></option>
+                                                        <% }) %>
                                                 </select>
                                                 <input type="hidden" name="old_business_type" value="<?php echo $row['business_Type']; ?>">
                                             </div>
@@ -174,24 +172,17 @@ include('../partials/admin/sidebar') %>
                                     <div class="row mb-4">
                                         <div class="col-sm-3 col-md-12">
                                             <div class="mb-3">
-                                                <select class="form-select form-select-lg mb-3" size="3" aria-label=".form-select-lg example" name="business_cat" id="business_cat" required>
+                                                <select class="form-select form-select-lg mb-3" size="3" aria-label=".form-select-lg example" name="business_category" id="business_cat" required>
                                                     <option disabled>Business Category: </option>
-                                                    <?php
-                                                    $sql4 = "SELECT * FROM business_category";
-
-                                                    $result4 = mysqli_query($conn, $sql4) or die("Query Failed.");
-
-                                                    if (mysqli_num_rows($result4) > 0) {
-                                                        while ($row4 = mysqli_fetch_assoc($result4)) {
-                                                            if ($row['business_category'] == $row4['business_cat_id']) {
-                                                                $selected = "selected";
-                                                            } else {
-                                                                $selected = "";
-                                                            }
-                                                            echo "<option {$selected} value='{$row4['business_cat_id']}'>{$row4['business_cat_title']}</option>";
-                                                        }
-                                                    }
-                                                    ?>
+                                                    <% business_category.forEach(function(business_category){ %>
+                                                        <%  if(JSON.stringify(seller.business_category) === JSON.stringify(business_category._id) ){
+                                                            var selected = 'selected'
+                                                              } else{
+                                                                var selected = ''
+                                                              }
+                                                               %>
+                                                        <option <%= selected %> value='<%= business_category._id %>'><%= business_category.business_category_name %></option>
+                                                        <% }) %>
                                                 </select>
                                                 <input type="hidden" name="old_business_cat" value="<?php echo $row['business_category']; ?>">
                                             </div>
@@ -200,11 +191,11 @@ include('../partials/admin/sidebar') %>
                                     <div class="row mb-4">
                                         <div class="input-group mb-3">
                                             <div class="form-check">
-                                                <?php if ($row['tables'] == 1) { ?>
+                                                <% if(seller.table == 1 ){ %>
                                                     <input class="form-check-input" name="tbl_reserve" type="checkbox" value="1" checked>
-                                                <?php } else { ?>
+                                                <% } else { %>
                                                     <input class="form-check-input" name="tbl_reserve" type="checkbox" value="1">
-                                                <?php } ?>
+                                               <% } %>
                                                 <label class="form-check-label">
                                                     Table reservation feature
                                                 </label>

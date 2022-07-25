@@ -3,14 +3,27 @@ const addonController = require('../app/http/controllers/admin/addons')
 const attrController = require('../app/http/controllers/admin/attributes')
 const catController = require('../app/http/controllers/admin/categories')
 const couponController = require('../app/http/controllers/admin/coupons')
+const cityController = require('../app/http/controllers/admin/city')
 const productController = require('../app/http/controllers/admin/products')
-
 const authController = require('../app/http/controllers/admin/authController')
+
+// customer modules
+const indexController = require('../app/http/controllers/customer/indexController')
+const custAuthController = require('../app/http/controllers/customer/authController')
+const allProducts = require('../app/http/controllers/customer/allProducts')
+const singleProduct = require('../app/http/controllers/customer/singleProduct')
+const allBusinesses = require('../app/http/controllers/customer/allBusinesses')
+const allCategory = require('../app/http/controllers/customer/allCategory')
+const allCity = require('../app/http/controllers/customer/allCity')
+
+
 
 // middlewares
 const guest = require('../app/http/middlewares/guest')
 const auth = require('../app/http/middlewares/auth')
 const user_role = require('../app/http/middlewares/user_role')
+const admin = require('../app/http/middlewares/admin')
+const customer_guest = require('../app/http/middlewares/customer/guest')
 
 function initRoutes(app){
 
@@ -47,15 +60,40 @@ function initRoutes(app){
     app.get('/edit-product/:id',user_role,productController().editProduct);
     app.post('/edit-product',user_role,productController().posteditProduct);
 
+    app.get('/cities',admin,cityController().index);
+    // app.post('/add-coupon',user_role,couponController().addCoupon);
+    // app.get('/delete-coupon/:id',auth,couponController().deleteCoupon);
+    // app.get('/edit-coupon/:id',user_role,couponController().editCoupon);
+    // app.post('/edit-coupon',user_role,couponController().posteditCoupon);
+
+
     // seller routes ends
 
     // Customer routes
-    app.get('/',homeController().index);
+    app.get('/',indexController().index);
+    app.get('/all-products',allProducts().index);
+    app.get('/single-product/:id',singleProduct().index);
+    app.get('/all-businesses',allBusinesses().index);
+    app.get('/single-business/:id',allBusinesses().singleBusiness);
+    app.get('/all-categories',allCategory().index);
+    app.get('/single-category/:id',allCategory().singleCategory);
+    app.get('/all-cities',allCity().index)
+    app.get('/single-city/:id',allCity().singleCity)
+
+    
+    app.get('/customer-login',customer_guest,custAuthController().index)
+    app.post('/customer-login',custAuthController().postCustomerLogin)
+    app.post('/customer-logout',custAuthController().logout)
+
+    app.get('/register-customer',customer_guest,custAuthController().registerCustomer)     // customer registeration
+    app.post('/register-customer',custAuthController().postCustomerRegister)               // customer registeration
+    // app.get('/update-business-profile/:id',authController().updateProfile)
 
 
 
 
-    // login
+
+    // seller login
     app.get('/login',guest,authController().login)
     app.post('/login',authController().postLogin)
     app.post('/logout',authController().logout)
@@ -63,7 +101,8 @@ function initRoutes(app){
     // Registeration
     app.get('/register-seller',guest,authController().sellerRegister)               // seller registeration
     app.post('/register-seller',authController().postSellerRegister)               // seller registeration
-    app.get('/update-business-profile/:id',authController().updateProfile)               // profile update
+    app.get('/update-business-profile/:id',auth,authController().updateProfile)               // profile update
+    app.post('/update-business-profile',auth,authController().postUpdateProfile)               // profile update
 }
 
 module.exports = initRoutes

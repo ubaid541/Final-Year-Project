@@ -6,7 +6,7 @@ const addonSchema = new Schema({
     addon_price : {type: Number, required:true},
     seller_id : {
         type: mongoose.Schema.Types.ObjectId, 
-        ref: 'businesses',
+        ref: 'Business',
         required:true
     },
  }, {timestamps: true})

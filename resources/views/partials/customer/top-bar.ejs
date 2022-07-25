@@ -1,0 +1,110 @@
+<body data-bs-spy="scroll" data-bs-target=".navbar">
+  <!--Navigation sec-->
+  <section id="header" class="mb-5">
+    <nav class="navbar navbar-expand-lg bg-white fixed-top">
+      <div class="container">
+        <a class="navbar-brand text-danger" href="/">Fatafut Mungwaen</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <!-- <span
+            class="ti-angle-double-down navbar-toggler-icon bg-danger"
+          ></span> -->
+          <span class="navbar-toggler-icon bg-danger"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="/all-products">Products</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="/all-categories"
+                >Categories</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="/all-cities">City</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="/all-businesses">Business</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="table-reservation.php">Reservation</a>
+            </li> -->
+            <% if(user){ %>
+            <li class="nav-item">
+              <form id="cust_logout" action="/customer-logout" method="post">
+                <a
+                  onclick="document.getElementById('cust_logout').submit()"
+                  class="dropdown-item"
+                  href="#"
+                  >logout</a
+                >
+              </form>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link text-dark" href="order-history.php">Orders</a>
+            </li>
+            <li class="nav-item">
+              <a href="user-account.php" class="nav-link text-dark"
+                ><i class="bi bi-person"></i
+              ></a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="customer_chat.php">Chat</a>
+            </li> -->
+            <!-- count number of products added to cart -->
+            <?php
+                            $sql1 = "SELECT COUNT(cart_ID) as id from product_cart where user_ID = {$_SESSION['user_id']}";
+                            $count = mysqli_query($conn, $sql1);
+                            $res = mysqli_fetch_assoc($count);
+                            ?>
+            <li>
+              <a class="btn mt-1 me-4 position-relative" href="cart.php">
+                <i class="bi bi-bag-dash"></i>
+                <span
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >
+                  0
+                  <?php echo $res['id']; ?>
+                </span>
+              </a>
+            </li>
+            <% } else { %>
+            <div class="dropdown show">
+              <a
+                class="btn btn-primary dropdown-toggle"
+                href="#"
+                role="button"
+                id="dropdownMenuLink"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+              >
+                login
+              </a>
+
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                <a class="dropdown-item" href="/login">Seller login</a>
+                <a class="dropdown-item" href="/customer-login"
+                  >Customer login</a
+                >
+              </div>
+            </div>
+            <% } %>
+          </ul>
+          <?php include 'search.php'; ?>
+        </div>
+      </div>
+    </nav>
+  </section>
+</body>

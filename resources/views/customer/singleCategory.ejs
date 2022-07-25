@@ -1,0 +1,57 @@
+<%- include('../partials/customer/top-bar') %>
+
+
+<section id="featured-products" class="featured-products">
+    <div class="container">
+        <div class="row">
+            <% cat_id.forEach((category_name)=>{ %>
+            <div class="heading mb-5 mt-5">
+                <h1 class="text-center">Category: <span class="text-danger"><%= category_name.cat_name %></span></h1>
+            </div>
+            <% }) %>
+        </div>
+                    <div class="row d-flex justify-content-center mb-4">
+                        <%  if(singleCategory.length){ singleCategory.forEach((singleCategory)=>{ %>
+                    <div class="col-sm-4 mb-4 d-flex justify-content-center">
+                        <div class="card" style="width: 18rem;">
+                            <img src="/images/<%= singleCategory.pro_image %>" class="card-img-top" alt="product-image">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= singleCategory.pro_name %></h5>
+                                <h5 class="card-title"><%= singleCategory.pro_price %>/Rs</h5>
+                                <p class="card-text"><%= singleCategory.pro_desc %></p>
+                            </div>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <% if(singleCategory.pro_addon){ %>
+                                        <p><%= singleCategory.pro_addon.addon_name %></p>
+                                        <h6 class="fw-bold"><%= singleCategory.pro_addon.addon_price %>/Rs</h6>
+                                        <% } else{ %>
+                                            <p>No addons</p>
+                                            <% } %>
+                                </li>
+                                <li class="list-group-item d-flex justify-content-between">
+                                    <% if(singleCategory.pro_attr){ %>
+                                        <p><%= singleCategory.pro_attr.attr_name %></p>
+                                        <h6 class="fw-bold"><%= singleCategory.pro_attr.attr_price %>/Rs</h6>
+                                        <% } else{ %>
+                                            <p>No Attributes</p>
+                                            <% } %>
+                                </li>
+                            </ul>
+                            <div class="card-body">
+                                <a href="/single-product/<%= singleCategory._id %>" class="card-link"><%= singleCategory.pro_name %></a>
+                                <a href="/single-business/<%= singleCategory.seller_id %>" class="card-link"><%= singleCategory.seller_id.business_name %></a>
+                            </div>
+                        </div>
+                    </div>
+                    <%
+                })
+            }else{ %>
+                <h1>No products found in this category.</h1>
+          <%  }
+            %>
+                    </div>
+      
+    </div>
+    </div>
+</section>

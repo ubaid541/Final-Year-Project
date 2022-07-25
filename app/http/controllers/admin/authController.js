@@ -18,12 +18,13 @@ function authController(){
         },
         postLogin(req,res,next){
             const {email,password} = req.body
+       
             // validate request
             if(!email || !password){
                 req.flash('error','All fields must be filled.')
                 return res.redirect('/login')
             }
-            passport.authenticate('local',(err,seller,info)=>{
+           passport.authenticate('local',(err,seller,info)=>{
                 if(err){
                     req.flash('error',info.message)
                     return next(err)
@@ -57,34 +58,7 @@ function authController(){
         })
         },
         async postSellerRegister(req,res){
-            const {first_name,last_name,username,email,password,phone,address,business_name,business_city,business_type,business_cat} = req.body
-           
-            // validate input fields
-            // body('username')
-
-            // validate empty fields
-            // if(!username || !email || !password || !business_name){
-            //     req.flash('error','All fields must be filled.')
-            //     return res.redirect('/register-seller')
-            // }
-
-            // if email already exists
-            // Seller.exists({username: username},(err,result)=>{
-            //     if(result){
-            //         req.flash('error','Email,username or business name already taken.')
-            //         return res.redirect('/register-seller')
-            //     }
-            // })
-
-            // Seller.exists({$or: [{username: {$eq : username}},{email : {$eq : email}},{business_name : {$eq : business_name}}]},(err,result)=>{
-            // if(result){
-            //             req.flash('error','Email,username or business name already taken.')
-            //             return res.redirect('/register-seller')
-                        
-            //         }
-            // })
-
-            
+            const {first_name,last_name,username,email,password,phone,address,business_name,city,business_type,business_cat,role} = req.body
 
             // Hash password
             const hashedPassword = await bcrypt.hash(password,10)
@@ -99,9 +73,10 @@ function authController(){
                 password : hashedPassword,
                 address : address,
                 business_name : business_name,
-                business_city : business_city,
+                business_city : city,
                 business_type : business_type,
                 business_category : business_cat,
+                role
                 
             })
 
@@ -129,6 +104,16 @@ function authController(){
             business_type : business_type,
             b_city : city
         })
+        },
+        postUpdateProfile(req,res){
+            const {fname,lname,username,email,phone,address,business_name,business_city,business_type,business_category,tbl_reserve,seller_id} = req.body
+
+            Seller.updateOne({_id : seller_id},{$set : {fname : fname,lname : lname,username : username,email : email,phone : phone,address : address,business_city : business_city,business_type : business_type,business_category : business_category, table : tbl_reserve}}).then((addon)=>{
+                req.flash('success','Business profile updated successfully.')
+                return res.redirect('/admin')
+            }).catch(err=>{
+                console.log(err)
+            })
         },
         logout(req,res,next){
             req.logout(function(err){

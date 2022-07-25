@@ -1,0 +1,42 @@
+<%- include('../partials/customer/top-bar') %>
+
+<section id="seller" class="category my-5">
+  <div class="container">
+    <div class="row">
+      <div class="heading mt-5 mb-4">
+        <h1 class="text-center">Business</h1>
+      </div>
+    </div>
+    <!-- sql command to fetch seller -->
+    <div class="row">
+      <% if(seller.length){ seller.forEach((seller)=>{ %>
+      <div class="card card-style mx-4" style="width: 18rem">
+        <div class="card-body">
+          <h5 class="card-title"><%= seller.business_name %></h5>
+          <ul class="list-group list-group-flush my-4">
+            <li class="list-group-item d-flex justify-content-between">
+              <h6 class="fw-bold">City</h6>
+              <p><%= seller.business_city.city_name %></p>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <h6 class="fw-bold">Type</h6>
+              <p><%= seller.business_type.business_type_name %></p>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+              <h6 class="fw-bold">Category</h6>
+              <p><%= seller.business_category.business_category_name %></p>
+            </li>
+          </ul>
+          <a
+            href="/single-business/<%= seller._id %>"
+            class="btn btn-outline-primary"
+            >Explore</a
+          >
+        </div>
+      </div>
+      <% }) }else{ %>
+      <h1>No Business found</h1>
+      <% } %>
+    </div>
+  </div>
+</section>

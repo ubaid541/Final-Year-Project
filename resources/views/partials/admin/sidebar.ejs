@@ -86,13 +86,13 @@
                         <div>
                             <ul class="navbar-nav ps-3">
                                 <li>
-                                    <a href="./table.php" class="nav-link px-3">
+                                    <a href="/table" class="nav-link px-3">
                                         <span class="me-2"><i class="bi bi-arrow-right"></i></span>
                                         <span>All Tables</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="./reservations.php" class="nav-link px-3">
+                                    <a href="/reservations" class="nav-link px-3">
                                         <span class="me-2"><i class="bi bi-arrow-right"></i></span>
                                         <span>Reservations</span>
                                     </a>
@@ -118,7 +118,7 @@
                         <div>
                             <ul class="navbar-nav ps-3">
                                 <li>
-                                    <a href="orders.php" class="nav-link px-3">
+                                    <a href="/orders" class="nav-link px-3">
                                         <span class="me-2"><i class="bi bi-arrow-right"></i></span>
                                         <span>
                                             All Order
@@ -128,7 +128,7 @@
                                 </li>
 
                                 <li>
-                                    <a href="completed-orders.php" class="nav-link px-3">
+                                    <a href="/completed-orders" class="nav-link px-3">
                                         <span class="me-2"><i class="bi bi-arrow-right"></i></span>
                                         <span>
                                             Completed
@@ -138,7 +138,7 @@
                                 </li>
                                
                                 <li>
-                                    <a href="processing-order.php" class="nav-link px-3">
+                                    <a href="/processing-order" class="nav-link px-3">
                                         <span class="me-2"><i class="bi bi-arrow-right"></i></span>
                                         <span>
                                             Processing
@@ -147,7 +147,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="cancel-order.php" class="nav-link px-3">
+                                    <a href="/cancel-order" class="nav-link px-3">
                                         <span class="me-2"><i class="bi bi-arrow-right"></i></i></span>
                                         <span>
                                             Cancel
@@ -164,32 +164,32 @@
                         Business section
                     </div>
                 </li>
-
+                <% if(user.role === 'admin'){ %>
                     <li>
-                        <a href="./business-type.php" class="nav-link px-3">
+                        <a href="/business-type" class="nav-link px-3">
                             <span class="me-2"><i class="bi bi-asterisk"></i></span>
                             <span> Business Type </span>
                         </a>
                     </li>
                     <li class="mt-2">
-                        <a href="./business-category.php" class="nav-link px-3">
+                        <a href="/business-category" class="nav-link px-3">
                             <span class="me-2"><i class="bi bi-list"></i></span>
                             <span> Business Category </span>
                         </a>
                     </li>
                     <li class="mt-2">
-                        <a href="./cities.php" class="nav-link px-3">
+                        <a href="/cities" class="nav-link px-3">
                             <span class="me-2"><i class="bi bi-building"></i></span>
                             <span> Cities </span>
                         </a>
                     </li>
                     <li class="mt-2">
-                        <a href="./shifts.php" class="nav-link px-3">
+                        <a href="/shifts" class="nav-link px-3">
                             <span class="me-2"><i class="bi bi-calendar2-check-fill fa-sm text-white-100 me-2"></i></span>
                             <span> Shifts </span>
                         </a>
                     </li>
-
+                    <% } %>
                 <li class="mt-2">
                     <a href="/coupons" class="nav-link px-3">
                         <span class="me-2"><i class="bi bi-gift"></i></span>

@@ -37,6 +37,7 @@
             <li class="nav-item">
               <a class="nav-link text-dark" href="/all-businesses">Business</a>
             </li>
+
             <!-- <li class="nav-item">
               <a class="nav-link" href="table-reservation.php">Reservation</a>
             </li> -->
@@ -63,19 +64,14 @@
               <a class="nav-link" href="customer_chat.php">Chat</a>
             </li> -->
             <!-- count number of products added to cart -->
-            <?php
-                            $sql1 = "SELECT COUNT(cart_ID) as id from product_cart where user_ID = {$_SESSION['user_id']}";
-                            $count = mysqli_query($conn, $sql1);
-                            $res = mysqli_fetch_assoc($count);
-                            ?>
             <li>
-              <a class="btn mt-1 me-4 position-relative" href="cart.php">
+              <a class="btn mt-1 me-4 position-relative" href="/cart">
                 <i class="bi bi-bag-dash"></i>
                 <span
+                  id="cartCounter"
                   class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
                 >
-                  0
-                  <?php echo $res['id']; ?>
+                  <%= session.cart ? session.cart.totalQty : '0' %>
                 </span>
               </a>
             </li>

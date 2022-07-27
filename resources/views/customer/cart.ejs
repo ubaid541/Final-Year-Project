@@ -1,0 +1,130 @@
+<%- include('../partials/customer/top-bar') %>
+
+<section class="h-100 h-custom" style="background-color: #1998be">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-12">
+        <div
+          class="card card-registration card-registration-2"
+          style="border-radius: 15px"
+        >
+          <div class="card-body p-0">
+            <div class="row g-0">
+              <div class="col-lg-8">
+                <div class="p-5">
+                  <div
+                    class="d-flex justify-content-between align-items-center mb-5"
+                  >
+                    <h1 class="fw-bold mb-0 text-black">Shopping Cart</h1>
+                    <h6 class="mb-0 text-muted"></h6>
+                  </div>
+                  <hr class="my-4" />
+                  <% if(session.cart) { %>
+                  <table
+                    class="table data-table table-hover table-bordered table-responsive"
+                  >
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col"><i class="bi bi-image-fill"></i></th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Addon</th>
+                        <th scope="col">Attribute</th>
+                        <th scope="col">Qty.</th>
+                        <th scope="col">Sub Total.</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% var i = 1; for(let product of
+                      Object.values(session.cart.items)) { %>
+                      <tr>
+                        <th scope="row"><%= i++ %></th>
+                        <td>
+                          <img
+                            style="width: 100px; height: 50px"
+                            src="images/<%= product.item.pro_image %>"
+                            class="card-img-top image-size"
+                            alt="product-image"
+                          />
+                        </td>
+                        <td><%= product.item.pro_name %></td>
+                        <td>
+                          <% if(product.item.pro_addon){ %> <%=
+                          product.item.pro_addon.addon_name %><br />
+                          <%= product.item.pro_addon.addon_price %>/Rs <% } else
+                          { %> No addon <% } %>
+                        </td>
+                        <td>
+                          <% if(product.item.pro_attr){ %> <%=
+                          product.item.pro_attr.attr_name %><br />
+                          <%= product.item.pro_attr.attr_price %>/Rs <% } else {
+                          %> No Attribute <% } %>
+                        </td>
+                        <td><%= product.qty %></td>
+                        <td><%= product.sub_total %>/Rs</td>
+                      </tr>
+                      <tr>
+                        <td colspan="2">
+                          <button class="btn btn-outline-dark" type="submit">
+                            <i class="bi bi-trash3"></i>Remove
+                          </button>
+                        </td>
+                        <td colspan="2">
+                          <% if(product.item.discount){ %>
+                          <p class="fw-bold">Discount:</p>
+                          <%= product.item.discount.coupon_name %><br />
+                          <%= product.item.discount.coupon_value %>/Rs <% } else
+                          { %> No Coupon <% } %>
+                        </td>
+                        <td colspan="2">
+                          <%= product.item.seller_id.business_name %>
+                        </td>
+                      </tr>
+                      <% } %>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="col-lg-4 bg-grey">
+                <div class="p-5">
+                  <h3 class="fw-bold mb-5 mt-2 pt-1">Summary</h3>
+                  <hr class="my-4" />
+
+                  <div class="d-flex justify-content-between mb-4">
+                    <h5 class="text-uppercase">items:</h5>
+                    <h5><%= session.cart.totalQty %></h5>
+                  </div>
+                  <hr class="my-4" />
+
+                  <div class="d-flex justify-content-between mb-5">
+                    <h5 class="text-uppercase">Total price</h5>
+                    <h5 id="total_price"><%= session.cart.totalPrice %>/Rs</h5>
+                  </div>
+
+                  <?php if ($res2['total'] != 0) { ?>
+                  <a
+                    type="button"
+                    href="/checkout"
+                    class="btn btn-dark btn-block btn-lg"
+                    data-mdb-ripple-color="dark"
+                    >Proceed to checkout</a
+                  >
+                  <?php } ?>
+                </div>
+              </div>
+              <% } else { %>
+              <h1 class="fw-bold mb-0 text-black ms-5">Cart is empty.</h1>
+
+              <div class="pt-3 mb-5s">
+                <a class="btn btn-outline-dark ms-5" href="/all-products"
+                  >Back to Shop</a
+                >
+              </div>
+              <% } %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

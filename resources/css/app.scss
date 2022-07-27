@@ -1,4 +1,6 @@
 @import './variables';
+@import '~noty/src/noty.scss';
+@import '~noty/src/themes/mint.scss';
 
 .sidebar-nav {
   width: $offCanvasWidth;
@@ -35,6 +37,10 @@
   }
 }
 
+.noty_theme__mint{
+  border-radius: 50px !important;
+  padding-left: 8px !important;
+}
 
 // media query
 @media (min-width: 992px) {

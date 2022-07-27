@@ -9,15 +9,10 @@
           <div class="product-images">
             <img
               src="/images/<%= product.pro_image %>"
-              class="card-img-top"
-              alt="product-image"
-            />
-            <!-- <img
-              src="images/<%= product.pro_image %>"
               alt="product-image"
               width="430px"
               height="350px"
-            /> -->
+            />
           </div>
         </div>
         <div class="col-md-6 col-md-offset-1 col-sm-12 col-xs-12">
@@ -25,15 +20,8 @@
             type="hidden"
             name="business_ID"
             class="form-control"
-            value="<?php echo $row['business_id']; ?>"
-            id="business<?php echo $product_id; ?>"
-          />
-          <input
-            type="hidden"
-            name="shipping_charges"
-            class="form-control"
-            value="<?php echo $row['product_tax']; ?>"
-            id="shipping_charges<?php echo $product_id; ?>"
+            value="<%= product.seller_id._id %>"
+            id="business"
           />
           <div class="content">
             <div class="h1">
@@ -46,8 +34,8 @@
               <h2 style="color: gray">
                 <input
                   type="hidden"
-                  value="<?php echo $row['product_price']; ?>"
-                  id="pprice<?php echo $product_id; ?>"
+                  value="<%= product.pro_price %>"
+                  id="pprice"
                 />
                 <%= product.pro_price %>/Rs
               </h2>
@@ -58,21 +46,16 @@
                 <div class="form-check">
                   <input
                     class="form-check-input"
-                    name="addon<?php echo $product_id; ?>"
+                    name="addon"
                     type="checkbox"
-                    value="<?php echo $row['addon_ID'] ?>"
-                    id="addon<?php echo $product_id; ?>"
+                    value="<%= product.pro_addon._id %>"
+                    id="addon"
                   />
                   <label class="form-check-label">
                     <%= product.pro_addon.addon_name %>
                   </label>
                 </div>
                 <div>
-                  <input
-                    type="hidden"
-                    value="<?php echo $row['addon_price']; ?>"
-                    id="aprice<?php echo $product_id; ?>"
-                  />
                   <p><%= product.pro_addon.addon_price %>Rs</p>
                 </div>
                 <% } else{ %>
@@ -84,21 +67,16 @@
                 <div class="form-check">
                   <input
                     class="form-check-input"
-                    name="attr<?php echo $product_id; ?>"
+                    name="attr"
                     type="checkbox"
-                    value="<?php echo $row['attr_ID'] ?>"
-                    id="attr<?php echo $product_id; ?>"
+                    value="<%= product.pro_attr._id %>"
+                    id="attr"
                   />
                   <label class="form-check-label">
                     <%= product.pro_attr.attr_name %>
                   </label>
                 </div>
                 <div>
-                  <input
-                    type="hidden"
-                    value="<?php echo $row['attr_price']; ?>"
-                    id="atprice<?php echo $product_id; ?>"
-                  />
                   <p><%= product.pro_attr.attr_price %>Rs</p>
                 </div>
               </li>
@@ -118,12 +96,7 @@
                     name="discount_ID"
                     class="form-control"
                     value="<%= product.discount._id %>"
-                    id="discount<?php echo $product_id; ?>"
-                  />
-                  <input
-                    type="hidden"
-                    value="<%= product.discount.coupon_value %>"
-                    id="discount_val<?php echo $product_id; ?>"
+                    id="discount"
                   />
                   <p>
                     <%= product.discount.coupon_name %> &nbsp; (<%=
@@ -142,7 +115,7 @@
                       placeholder="Product Quantity"
                       value="1"
                       min="1"
-                      id="qty<?php echo $product_id; ?>"
+                      id="qty"
                       required
                     />
                     <label for=" floatingInput">Quantity</label>
@@ -151,20 +124,19 @@
               </li>
             </ul>
             <br />
-            <?php if (!isset($_SESSION['username'])) { ?>
-            <a class="btn btn-outline-primary" href="login.php"
-              >Login to add to cart</a
-            >
-            <?php } else { ?>
+            <% if(user){ %>
             <Button
-              class="btn btn-outline-primary"
+              class="btn btn-outline-primary add_to_cart"
               type="submit"
               name="add_to_cart"
-              onclick="add_to_cart(<?php echo $product_id; ?>,'add')"
+              data-product="<%= JSON.stringify(product) %>"
               >Add to cart</Button
             >
-            <?php  }
-                                ?>
+            <% } else{ %>
+            <a class="btn btn-outline-primary" href="/customer-login"
+              >Login to add to cart</a
+            >
+            <% } %>
           </div>
         </div>
       </div>

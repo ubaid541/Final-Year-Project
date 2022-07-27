@@ -15,6 +15,7 @@ const singleProduct = require('../app/http/controllers/customer/singleProduct')
 const allBusinesses = require('../app/http/controllers/customer/allBusinesses')
 const allCategory = require('../app/http/controllers/customer/allCategory')
 const allCity = require('../app/http/controllers/customer/allCity')
+const cartController = require('../app/http/controllers/customer/cartController')
 
 
 
@@ -24,6 +25,7 @@ const auth = require('../app/http/middlewares/auth')
 const user_role = require('../app/http/middlewares/user_role')
 const admin = require('../app/http/middlewares/admin')
 const customer_guest = require('../app/http/middlewares/customer/guest')
+const customer_auth = require('../app/http/middlewares/customer/auth')
 
 function initRoutes(app){
 
@@ -79,6 +81,8 @@ function initRoutes(app){
     app.get('/single-category/:id',allCategory().singleCategory);
     app.get('/all-cities',allCity().index)
     app.get('/single-city/:id',allCity().singleCity)
+    app.get('/cart',customer_auth,cartController().index)
+    app.post('/update-cart',cartController().update)
 
     
     app.get('/customer-login',customer_guest,custAuthController().index)

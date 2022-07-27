@@ -62,6 +62,7 @@ app.use(express.json())
 // global middleware
 app.use((req,res,next)=>{
     res.locals.user = req.user
+    res.locals.session = req.session
     // pass the request
     next()
 })

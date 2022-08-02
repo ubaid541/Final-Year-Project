@@ -49,27 +49,12 @@ function productController(){
 
         var upload = multer({
             storage : storage,
-            // fileFilter: function (req, file, callback) {
-            //     var ext = path.extname(file.originalname);
-            //     if(ext !== '.png' || ext !== '.jpg' || ext !== '.jpeg') {
-            //         callback(null, false)
-            //         req.flash('error','Only images are allowed')
-            //         return res.redirect('/products')
-            //        // return callback(new Error('Only images are allowed'))
-            //     }else{
-            //         callback(null, true)
-            //         // req.flash('error','Only images are allowed')
-            //         // return res.redirect('/products')
-            //     }
-               
-            // }
+
             fileFilter: (req, file, cb) => {
                 if (file.mimetype == "image/png" || file.mimetype == "image/jpg" || file.mimetype == "image/jpeg") {
                   cb(null, true);
                 } else {
                   cb(null, false);
-                //   res.status(500).send({ message: error.code === 'FILE_TYPE' ? "Image more than 1MB!" : error.message });
-                  //return cb(new Error('Only .png, .jpg and .jpeg format allowed!'));
                 }
               },
               limits : {fileSize : 2097152}

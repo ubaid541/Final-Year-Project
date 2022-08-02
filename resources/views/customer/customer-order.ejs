@@ -1,0 +1,181 @@
+<%- include('../partials/customer/top-bar') %>
+
+<main class="mt-5 pt-3">
+  <div class="container-fluid col-sm-12">
+    <!-- page heading starts  -->
+    <div class="page-heading">
+      <div class="row">
+        <% if(messages.success) { %>
+        <div class="row">
+          <div class="row col-4 text-center"></div>
+          <div class="row col-6 text-center">
+            <div class="alert alert-success" role="alert">
+              <%= messages.success %>
+            </div>
+          </div>
+          <div class="row col-4 text-center"></div>
+        </div>
+        <% } %>
+      </div>
+      <div class="row">
+        <div
+          class="d-sm-flex align-items-center justify-content-between mb-1 mt-5"
+        >
+          <h1 class="h3 my-4 text-gray-800">
+            <i class="bi bi-filter"></i>Orders<span
+              class="badge bg-secondary"
+              style="margin-left: 0.5rem"
+            ></span>
+          </h1>
+        </div>
+      </div>
+    </div>
+    <!-- page heading ends  -->
+    <!-- Product table starts here -->
+    <div class="row mb-4">
+      <div class="col-lg-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row" style="width: 100%">
+              <div class="col-md-8 mb-4 mb-lg-1">
+                <form class="d-flex ms-auto">
+                  <div class="input-group my-3 my-lg-0">
+                    <input
+                      type="text"
+                      id="searchPro"
+                      onkeyup="myFunction()"
+                      class="form-control"
+                      placeholder="Search Order"
+                      aria-label="Search Order"
+                      aria-describedby="button-addon2"
+                    />
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      id="button-addon2"
+                    >
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div class="col-4 mb-3 mb-lg-0">
+                <div class="d-grid gap-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive" id="proTable">
+              <table
+                class="table data-table table-striped table-bordered table-responsive"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col" class="text-center">#</th>
+                    <th scope="col" class="text-center">Order Number</th>
+                    <th scope="col" class="text-center">Username</th>
+                    <th scope="col" class="text-center">Phone</th>
+                    <th scope="col" class="text-center">Payment Type</th>
+                    <th scope="col" class="text-center">Payment Status</th>
+                    <th scope="col" class="text-center">Order Status</th>
+                    <th scope="col" class="text-center">Date</th>
+                    <th scope="col" class="text-center">Total Qty</th>
+                    <th scope="col" class="text-center">Total Price</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% if(orders.length){ var i = 1 %> <%
+                  orders.forEach((order)=>{ %>
+                  <tr>
+                    <td scope="row" class="text-center fw-bold"><%= i++ %></td>
+                    <td class="text-center"><%= order._id %></td>
+                    <td class="text-center">
+                      <%= order.customerId.username %>
+                    </td>
+                    <td class="text-center"><%= order.phone %></td>
+                    <td class="text-center">COD</td>
+                    <% if(order.payment_status === 'unpaid'){ %>
+                    <td class="text-center text-danger">unpaid</td>
+                    <% } else if(order.payment_status === 'paid'){ %>
+                    <td class="text-center text-success">Paid</td>
+                    <% } %>
+                    <td class="text-center">
+                      <% if(order.status === 'order_placed'){ %>
+                      <p class="text-primary">Order Placed</p>
+                      <% } else if(order.status === 'processing'){ %>
+                      <p class="text-primary">Processing</p>
+                      <% } else if(order.status === 'completed'){ %>
+                      <p class="text-success">Completed</p>
+                      <% } else if(order.status === 'cancelled') { %>
+                      <p class="text-danger">Canceled</p>
+                      <% } %>
+                    </td>
+                    <td class="text-center">
+                      <%= moment(order.createdAt).format('YYYY-MM-DD hh:mm A')
+                      %>
+                    </td>
+                    <td class="text-center"><%= order.totalQty %></td>
+                    <td class="text-center"><%= order.totalPrice %>/Rs</td>
+                    <td class="text-center">
+                      <div class="dropdown">
+                        <button
+                          class="btn btn-secondary btn-sm dropdown-toggle"
+                          type="button"
+                          id="dropdownMenuButton1"
+                          data-bs-toggle="dropdown"
+                          aria-expanded="false"
+                        >
+                          <i class="bi bi-gear-fill"></i>
+                        </button>
+                        <ul
+                          class="dropdown-menu shadow-lg rounded mt-1"
+                          aria-labelledby="dropdownMenuButton1"
+                        >
+                          <li>
+                            <a
+                              class="dropdown-item"
+                              href="/customer/delete-order/<%= order._id %>"
+                              >Delete</a
+                            >
+                          </li>
+                        </ul>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <% }) } else{ %>
+                  <h1 class="text-center">No order found</h1>
+                  <% } %>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Order table ends here -->
+  </div>
+</main>
+
+<script>
+  // search inside product table
+  function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchPro");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("proTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>

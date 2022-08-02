@@ -1,4 +1,5 @@
-// const Product = require('../../models/product')
+const Order = require('../../../models/orders')
+const moment = require('moment')
 
 function homeController(){
     // factory method (return object)
@@ -6,8 +7,18 @@ function homeController(){
         // method
         async index(req,res){
 
-            // const products = await Product.find()
-            return  res.render('./admin-dashboard/admin')
+            const new_orders = await Order.count({ status : 'order_placed'})
+            const processing_orders = await Order.count({ status : 'processing'})
+            const canceled_orders = await Order.count({ status : 'cancelled'})  
+            const orders = await Order.find({status : {$ne : 'completed'}}, null, {sort : {'createdAt' : -1}}).populate('customerId','-password')          
+            
+            return  res.render('./admin-dashboard/admin',{
+                new_orders : new_orders,
+                processing_orders : processing_orders,
+                cancelled_orders : canceled_orders,
+                orders : orders,
+                moment : moment
+            })
 
             // Product.find().then(function(products){
             //     console.log(products)

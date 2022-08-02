@@ -1,0 +1,220 @@
+<%- include('../partials/customer/top-bar') %>
+
+
+<main class="mt-5 mx-5 col-sm-10 pt-3">
+
+    <div class="container-fluid">
+        <!-- page heading starts  -->
+        <div class="page-heading">
+            <div class="row align-items-center">
+                <div class="d-sm-flex align-items-center justify-content-between mb-1 mt-5">
+                    
+                        <div class="d-sm-flex align-items-center justify-content-between">
+                            <h1 class="h3 mb-0 text-gray-800">
+                                <i class="bi bi-filter"></i>Order<span class="badge bg-secondary mx-1"><%= order._id %></span>
+                            </h1>
+
+                            <?php if ($row['product_payment_status'] == 0) { ?>
+                                <span class="badge rounded-pill bg-danger text-capitalize mx-3">
+                                    unpaid
+                                </span>
+                            <?php } else { ?>
+                                <span class="badge rounded-pill bg-success text-capitalize margin-left">
+                                    paid
+                                </span>
+                            <?php } ?>
+                            <?php if ($row['product_order_status'] == 0) { ?>
+                                <span class="badge rounded-pill bg-primary text-capitalize margin-left"> Processing </span>
+                            <?php } else if ($row['product_order_status'] == 1) { ?>
+                                <span class="badge rounded-pill bg-success text-capitalize margin-left">
+                                    Completed
+                                </span>
+                            <?php } else if ($row['product_order_status'] == 2) { ?>
+                                <span class="badge rounded-pill bg-danger text-capitalize margin-left">
+                                    Cancelled
+                                </span>
+                            <?php }  ?>
+
+                            <span class="ms-2 ms-sm-3 margin-left"><i class="bi bi-calendar-fill"></i> <?php echo $row['product_order_date']; ?>
+                            </span>
+                        </div>
+
+                </div>
+            </div>
+            <div class="row align-items-center">
+                <div class="d-sm-flex align-items-center justify-content-between mb-1 my-2">
+
+                    <span class="ms-2 my-4 ms-sm-3">
+                        <div class="dropdown float-end ps-2">
+                            <button class="btn dropdown-toggle border border-1" type="button" id="dropDownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                Status
+                            </button>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li>
+                                    <form action="./controller-files/order-controller/process-order.php" method="post">
+                                        <input type="hidden" name="user_id" value="<?php echo $user_id; ?>">
+                                        <input type="hidden" name="b_id" value="<?php echo $business_id; ?>">
+                                        <button type="submit" name="cancel" class="dropdown-item">Cancel</button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+    <!-- page heading ends  -->
+    <!-- Single Invoice starts here -->
+    <div class="row">
+        <!-- Invoice Details column -->
+        <div class="col-lg-8 mb-4">
+            <!-- Order Details Card -->
+            <div class="card shadow mb-4 h-100">
+
+                    <div class="card-header py-3">
+                        <h6 class="m-0 font-weight-bold text-primary text-capitalize">
+                            Order details
+                        </h6>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <div class="table-responsive">
+                                <table class="table data-table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col" class="text-center">#</th>
+                                            <th scope="col" class="text-center"><i class="bi bi-image-fill"></i></th>
+                                            <th scope="col" class="text-center">Name</th>
+                                            <th scope="col" class="text-center">Addon</th>
+                                            <th scope="col" class="text-center">Attribute</th>
+                                            <th scope="col" class="text-center">Quantity</th>
+                                            <th scope="col" class="text-center">Pyament Method</th>
+                                            <th scope="col" class="text-center">Total</th>
+                                            <th scope="col" class="text-center">Business</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      
+                                            <tr class="text-center">
+                                                <th scope="row">#</th>
+                                                <td>
+                                                    <img style=" height: 35px;
+    border-radius: 5px;
+    margin-right: 5px;" src="business-owner/uploads/<?php echo $order['product_image']; ?>" alt="food image" />
+                                                </td>
+
+                                                <td><a href='./single-product.php?pid=<?php echo $order['pro_id']; ?>'><<?php echo $order['product_name']; ?>></a></td>
+
+                                                <td>
+                                                    <?php
+                                                    if ($order['addon_ID'] != 0) {
+                                                        echo $order['addon_name'];
+                                                    } else { ?>
+                                                        No addon
+                                                    <?php } ?>
+                                                </td>
+                                                <td><?php
+                                                    if ($order['attr_ID'] != 0) {
+                                                        echo $order['attr_Name'];
+                                                    } else { ?>
+                                                        No attribute
+                                                    <?php } ?></td>
+                                                <td><?php echo $order['product_quantity']; ?></td>
+                                                <td><?php
+                                                    if ($row['product_payment_method'] == 0) {
+                                                    ?>
+                                                        COD
+                                                    <?php } ?></td>
+                                                <td>
+                                                    subtotal/ Rs
+                                                </td>
+
+                                                <td><?php echo $order['business_name']; ?></td>
+
+                                            </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-4 col-sm-5"></div>
+                                <div class="col-lg-4 col-sm-5 ms-auto">
+                                    <table class="table">
+                                        <tbody>
+                                            <tr>
+                                                <td class="text-start">
+                                                    <strong>Total</strong>
+                                                </td>
+                                                <td class=" text-center">
+                                                   <%= order.totalPrice %>/Rs
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        <?php
+
+                } ?>
+        </div>
+        <!-- Customer Details column -->
+        <div class="col-lg-4 mb-4">
+            <!-- Customer Details Card -->
+            <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Customer</h6>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table" id="dataTable" width="100%" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <img class="avatar" style="height: 2.65rem;
+    width: 2.65rem;
+    border-radius: 50%;" src="/static-images/male-avatar.png" alt="Avatar" />
+                                        <span class="ms-2"><%= user.username %> </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="icon-info icon-circle">
+                                            <i class="bi bi-basket2-fill"></i>
+                                        </div>
+                                        <span class="ms-2"><%= order.totalQty %> Orders </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5 class="text-capitalize mb-2">Contact</h5>
+                                        <i class="bi bi-envelope"></i>
+                                        <span class="ms-2"> <%= order.phone %> </span><br />
+                                        <i class="bi bi-phone"></i>
+                                        <span class="ms-2"> <%= order.email %> </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5 class="text-capitalize mb-2">Delivery address</h5>
+                                        <span class="ms-2"> <%= order.address %> </span><br />
+                                        <!-- <span class="ms-2">
+                                            <button type="button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Cusotmer Location">
+                                                <i class="bi bi-map-fill"></i></button></span> -->
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Single Invoice ends here -->
+    </div>
+</main>

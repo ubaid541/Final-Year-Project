@@ -3,6 +3,19 @@
 <section class="h-100 h-custom" style="background-color: #1998be">
   <div class="container py-5 h-100">
     <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="row">
+        <% if(messages.error) { %>
+        <div class="row">
+          <div class="row col-4 text-center"></div>
+          <div class="row col-6 text-center">
+            <div class="alert alert-danger" role="alert">
+              <%= messages.error %>
+            </div>
+          </div>
+          <div class="row col-4 text-center"></div>
+        </div>
+        <% } %>
+      </div>
       <div class="col-12">
         <div
           class="card card-registration card-registration-2"
@@ -46,7 +59,7 @@
                             class="card-img-top image-size"
                             alt="product-image"
                           />
-                        </td>
+                        </td>                        
                         <td><%= product.item.pro_name %></td>
                         <td>
                           <% if(product.item.pro_addon){ %> <%=
@@ -63,12 +76,12 @@
                         <td><%= product.qty %></td>
                         <td><%= product.sub_total %>/Rs</td>
                       </tr>
-                      <tr>
+                      <!-- <tr>
                         <td colspan="2">
                           <button class="btn btn-outline-dark" type="submit">
                             <i class="bi bi-trash3"></i>Remove
                           </button>
-                        </td>
+                        </td> -->
                         <td colspan="2">
                           <% if(product.item.discount){ %>
                           <p class="fw-bold">Discount:</p>
@@ -101,15 +114,93 @@
                     <h5 id="total_price"><%= session.cart.totalPrice %>/Rs</h5>
                   </div>
 
-                  <?php if ($res2['total'] != 0) { ?>
-                  <a
-                    type="button"
-                    href="/checkout"
-                    class="btn btn-dark btn-block btn-lg"
-                    data-mdb-ripple-color="dark"
-                    >Proceed to checkout</a
-                  >
-                  <?php } ?>
+                  <% if(user){ seller.forEach((seller)=>{ %>
+                  <form action="/orders" method="post">
+                    <div class="row mt-2">
+                      <div class="my-4">
+                        <h4 class="fw-bold mb-0 text-black text-start">
+                          Delivery Address
+                        </h4>
+                      </div>
+                      <div class="col-sm-3 col-md-6">
+                        <div class="mb-3">
+                          <div class="form-floating">
+                            <input
+                              name="address"
+                              class="form-control"
+                              type="text"
+                              placeholder="Shipping Address"
+                              value="<%= seller.address %>"
+                              required
+                            />
+                            <label for="floatingInput">Delivery Address</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 col-md-6">
+                        <div class="mb-3">
+                          <div class="form-floating">
+                            <input
+                              name="phone"
+                              class="form-control"
+                              type="text"
+                              placeholder="Phone Number"
+                              value="<%= seller.phone %>"
+                              required
+                            />
+                            <label for="floatingInput">Contact Number</label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row mt-4">
+                      <div class="col-sm-3 col-md-6 mb-5">
+                        <div class="mb-3">
+                          <div class="form-floating">
+                            <input
+                              name="email"
+                              class="form-control"
+                              type="text"
+                              placeholder="Email"
+                              value="<%= seller.email %>"
+                              required
+                            />
+                            <label for="floatingInput">Email</label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-sm-3 col-md-6 mb-5">
+                        <div class="mb-3">
+                          <div class="text-start mb-3">
+                            <h5>Payment Method</h5>
+                          </div>
+                          <div class="form-check">
+                            <input
+                              class="form-check-input"
+                              type="radio"
+                              name="payment_method"
+                              checked
+                            />
+                            <label
+                              class="form-check-label text-start"
+                              for="flexRadioDefault1"
+                            >
+                              Cash On Delivery
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+
+                      <button
+                        type="submit"
+                        class="btn btn-dark btn-block btn-lg"
+                        data-mdb-ripple-color="dark"
+                      >
+                        Place Order
+                      </button>
+                    </div>
+                  </form>
+                  <% }) } %>
                 </div>
               </div>
               <% } else { %>

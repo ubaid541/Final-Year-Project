@@ -6,6 +6,10 @@ const couponController = require('../app/http/controllers/admin/coupons')
 const cityController = require('../app/http/controllers/admin/city')
 const productController = require('../app/http/controllers/admin/products')
 const authController = require('../app/http/controllers/admin/authController')
+const adminOrderController = require('../app/http/controllers/admin/orderController')
+const statusController = require('../app/http/controllers/admin/orderStatusController')
+const paymentStatusController = require('../app/http/controllers/admin/payment_status_controller')
+const commentController = require('../app/http/controllers/admin/comment')
 
 // customer modules
 const indexController = require('../app/http/controllers/customer/indexController')
@@ -16,6 +20,7 @@ const allBusinesses = require('../app/http/controllers/customer/allBusinesses')
 const allCategory = require('../app/http/controllers/customer/allCategory')
 const allCity = require('../app/http/controllers/customer/allCity')
 const cartController = require('../app/http/controllers/customer/cartController')
+const orderController = require('../app/http/controllers/customer/orderController')
 
 
 
@@ -62,11 +67,12 @@ function initRoutes(app){
     app.get('/edit-product/:id',user_role,productController().editProduct);
     app.post('/edit-product',user_role,productController().posteditProduct);
 
-    app.get('/cities',admin,cityController().index);
-    // app.post('/add-coupon',user_role,couponController().addCoupon);
-    // app.get('/delete-coupon/:id',auth,couponController().deleteCoupon);
-    // app.get('/edit-coupon/:id',user_role,couponController().editCoupon);
-    // app.post('/edit-coupon',user_role,couponController().posteditCoupon);
+    app.get('/admin/orders',auth,adminOrderController().index);
+    app.get('/admin/delete-order/:id',auth,adminOrderController().delete_order);
+    app.post('/admin/order/status',auth,statusController().update);
+    app.post('/admin/order/payment_status',auth,paymentStatusController().update);
+
+    app.post('/comment',customer_auth,commentController().index)
 
 
     // seller routes ends
@@ -83,6 +89,10 @@ function initRoutes(app){
     app.get('/single-city/:id',allCity().singleCity)
     app.get('/cart',customer_auth,cartController().index)
     app.post('/update-cart',cartController().update)
+    app.post('/orders',orderController().store)
+    app.get('/customer-orders',customer_auth,orderController().order_list)
+    app.get('/customer/delete-order/:id',customer_auth,orderController().delete_order)
+
 
     
     app.get('/customer-login',customer_guest,custAuthController().index)

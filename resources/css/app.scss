@@ -150,3 +150,66 @@
   border-color: var(--bg-danger);
   background-color: var(--bg-danger);
 }
+
+// home banner
+.home .home-banner-1,
+.home .home-banner-2{
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: 90% center;
+    min-height: 650px;
+    position: relative;
+}
+.home .home-banner-1{
+    background-image:url(/static-images/1.jpg) ;
+}
+.home .home-banner-2{
+    background-image:url(/static-images/2.jpg) ;
+}
+.home .home-banner .home-banner-text{
+    color:var(--text-black);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-110%, -50%);
+}
+.home .home-banner .home-banner-text h1{
+    font-size: 6rem;
+}
+.home .carousel-indicators [data-bs-target]{
+    background-color: var(--bg-danger);
+    width: 2.5rem;
+    height: 0.313rem;
+}
+.home .carousel-control-next-icon,
+.home .carousel-control-prev-icon{
+    background: transparent;
+}
+.home .slider-icon{
+    font-size: 3rem;
+    font-weight: 600;
+    color:var(--text-danger);
+}
+
+// city
+.navigation{
+  padding-top: 2rem;
+}
+.featured-products{
+  padding-top: 2rem;
+}
+.img-size{
+  width: 200px;
+  height: 200px;
+}
+.card-style{
+  margin-left: 4rem;
+  margin-top: 2rem;
+}
+.heading{/*Not working*/
+  align-items: center;
+}
+.featured-product-style{
+  margin-left: 1.2rem;
+  margin-top: 2rem;
+}

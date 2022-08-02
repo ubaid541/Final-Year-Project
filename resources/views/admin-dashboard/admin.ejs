@@ -34,7 +34,11 @@ include('../partials/admin/sidebar') %>
                 >
                   Pending Orders
                 </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">9</div>
+                <% if(new_orders){ %>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  <%= new_orders %>
+                </div>
+                <% } %>
               </div>
               <div class="col-auto">
                 <i class="bi bi-cart-check"></i>
@@ -55,7 +59,13 @@ include('../partials/admin/sidebar') %>
                 >
                   Completed Orders
                 </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">4</div>
+                <% if(processing_orders){ %>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  <%= processing_orders %>
+                </div>
+                <% } else { %>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                <% } %>
               </div>
               <div class="col-auto">
                 <i class="bi bi-check-circle"></i>
@@ -76,7 +86,13 @@ include('../partials/admin/sidebar') %>
                 >
                   Cancelled Orders
                 </div>
-                <div class="h5 mb-0 font-weight-bold text-gray-800">8</div>
+                <% if(cancelled_orders){ %>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                  <%= cancelled_orders %>
+                </div>
+                <% } else { %>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">0</div>
+                <% } %>
               </div>
               <div class="col-auto">
                 <i class="bi bi-bicycle"></i>
@@ -98,49 +114,45 @@ include('../partials/admin/sidebar') %>
                 <thead>
                   <tr>
                     <th scope="col" class="text-center">#</th>
-                    <th scope="col" class="text-center">Order Number</th>
+                    <th scope="col" class="text-center">Order Id</th>
                     <th scope="col" class="text-center">Username</th>
                     <th scope="col" class="text-center">Payment Method</th>
                     <th scope="col" class="text-center">Status</th>
-                    <th scope="col" class="text-center">Assigned To</th>
-                    <th scope="col" class="text-center">Action</th>
+                    <th scope="col" class="text-center">Payment Status</th>
+                    <th scope="col" class="text-center">Time</th>
                   </tr>
                 </thead>
                 <tbody>
+                  <% if(orders.length){ var i = 1; orders.forEach((order)=>{ %>
                   <tr class="text-center">
-                    <th scope="row" class="text-center">1</th>
-                    <td class="text-center">2</td>
-                    <td>ubaid</td>
+                    <th scope="row" class="text-center"><%= i++ %></th>
+                    <td class="text-center"><%= order._id %></td>
+                    <td><%= order.customerId.username %></td>
                     <td class="text-center">cod</td>
                     <td class="text-center">
+                      <% if(order.status === 'order_placed'){ %>
+                      <p class="text-primary">Order Placed</p>
+                      <% } else if(order.status === 'processing'){ %>
                       <p class="text-primary">Processing</p>
+                      <% } else if(order.status === 'completed'){ %>
+                      <p class="text-success">Completed</p>
+                      <% } else if(order.status === 'cancelled') { %>
+                      <p class="text-danger">Canceled</p>
+                      <% } %>
                     </td>
-                    <td>No rider assigned</td>
+                    <% if(order.payment_status === 'unpaid'){ %>
+                    <td class="text-center text-danger">unpaid</td>
+                    <% } else if(order.payment_status === 'paid'){ %>
+                    <td class="text-center text-success">Paid</td>
+                    <% } %>
                     <td class="text-center">
-                      <div class="dropdown">
-                        <button
-                          class="btn btn-secondary btn-sm dropdown-toggle"
-                          type="button"
-                          id="dropdownMenuButton1"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <i class="bi bi-gear-fill"></i>
-                        </button>
-                        <ul
-                          class="dropdown-menu shadow-lg rounded mt-1"
-                          aria-labelledby="dropdownMenuButton1"
-                        >
-                          <li>
-                            <a class="dropdown-item btn" href="#">View</a>
-                          </li>
-                          <li>
-                            <a class="dropdown-item" href="#">Delete</a>
-                          </li>
-                        </ul>
-                      </div>
+                      <%= moment(order.createdAt).format('YYYY-MM-DD hh:mm A')
+                      %>
                     </td>
                   </tr>
+                  <% }) } else { %>
+                  <h2>No Latest Orders</h2>
+                  <% } %>
                 </tbody>
               </table>
             </div>

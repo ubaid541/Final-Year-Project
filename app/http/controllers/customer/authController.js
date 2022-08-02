@@ -1,5 +1,4 @@
 const City = require('../../../models/seller/city')
-// const Customer = require('../../../models/customer/customer')
 const Customer = require('../../../models/seller/seller')
 const bcrypt = require('bcrypt')
 const passport = require('passport')
@@ -54,13 +53,13 @@ function authController(){
             const customer = new Customer({
                 fname : first_name , 
                 lname : last_name ,
-                username ,
-                email ,
-                phone ,
+                username : username ,
+                email : email ,
+                phone : phone ,
                 password : hashedPassword,
-                address,
+                address : address,
                 business_city : city ,
-                role              
+                role : role              
             })
 
             customer.save().then((seller)=>{

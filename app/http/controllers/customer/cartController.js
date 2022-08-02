@@ -1,7 +1,11 @@
+const Seller = require('../../../models/seller/seller')
+
+
 function cartController(){
     return{
-        index(req,res){
-            return res.render('customer/cart')
+        async index(req,res){
+            const seller = await Seller.find({_id : req.user._id})
+            return res.render('customer/cart',{seller : seller})
         },
         update(req,res){
             // first time creating cart and store in 'cart' variable
@@ -30,6 +34,7 @@ function cartController(){
                 cart.items[req.body._id].sub_total =  cart.items[req.body._id].sub_total + single_product_price
                 cart.totalPrice = cart.totalPrice + single_product_price
             }else{
+
                 cart.items[req.body._id].qty =  cart.items[req.body._id].qty + req.body.qty
                 cart.totalQty = cart.totalQty + req.body.qty
 

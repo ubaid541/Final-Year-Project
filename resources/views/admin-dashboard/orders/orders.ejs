@@ -1,0 +1,134 @@
+<%- include('../../partials/admin/top-bar') %> <%-
+include('../../partials/admin/sidebar') %>
+
+<main class="mt-5 pt-3">
+  <div class="container-fluid">
+    <!-- page heading starts  -->
+    <div class="page-heading">
+      <div class="row">
+        <% if(messages.error) { %>
+        <div class="row">
+          <div class="row col-4 text-center"></div>
+          <div class="row col-6 text-center">
+            <div class="alert alert-danger" role="alert">
+              <%= messages.error %>
+            </div>
+          </div>
+          <div class="row col-4 text-center"></div>
+        </div>
+        <% } else if(messages.success){ %>
+        <div class="row">
+          <div class="row col-4 text-center"></div>
+          <div class="row col-6 text-center">
+            <div class="alert alert-success" role="alert">
+              <%= messages.success %>
+            </div>
+          </div>
+          <div class="row col-4 text-center"></div>
+        </div>
+        <% } %>
+      </div>
+      <div class="row">
+        <div
+          class="d-sm-flex align-items-center justify-content-between mb-1 mt-5"
+        >
+          <h1 class="h3 mb-0 text-gray-800">
+            <i class="bi bi-filter"></i>Orders<span
+              class="badge bg-secondary"
+              style="margin-left: 0.5rem"
+            ></span>
+          </h1>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Dashboard</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Orders</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- page heading ends  -->
+    <!-- Product table starts here -->
+    <div class="row mb-4">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-header">
+            <div class="row" style="width: 100%">
+              <div class="col-8 mb-4 mb-lg-1">
+                <form class="d-flex ms-auto">
+                  <div class="input-group my-3 my-lg-0">
+                    <input
+                      type="text"
+                      id="searchPro"
+                      onkeyup="myFunction()"
+                      class="form-control"
+                      placeholder="Search Order"
+                      aria-label="Search Order"
+                      aria-describedby="button-addon2"
+                    />
+                    <button
+                      class="btn btn-primary"
+                      type="button"
+                      id="button-addon2"
+                    >
+                      <i class="bi bi-search"></i>
+                    </button>
+                  </div>
+                </form>
+              </div>
+              <div class="col-4 mb-3 mb-lg-0">
+                <div class="d-grid gap-2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="table-responsive" id="proTable">
+              <table
+                class="table data-table table-striped table-bordered table-responsive"
+              >
+                <thead>
+                  <tr>
+                    <th scope="col" class="text-center">Order Number</th>
+                    <th scope="col" class="text-center">Username</th>
+                    <th scope="col" class="text-center">Phone</th>
+                    <th scope="col" class="text-center">Address</th>
+                    <th scope="col" class="text-center">Payment Type</th>
+                    <th scope="col" class="text-center">Payment Status</th>
+                    <th scope="col" class="text-center">Order Status</th>
+                    <th scope="col" class="text-center">Date</th>
+                    <th scope="col" class="text-center">Total</th>
+                    <% if(user.role === 'seller'){ %>
+                    <th scope="col">Action</th>
+                    <% } %>
+                  </tr>
+                </thead>
+                <tbody id="orderTableBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Order table ends here -->
+  </div>
+</main>
+
+<script>
+  // search inside product table
+  function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("searchPro");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("proTable");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[0];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }
+</script>

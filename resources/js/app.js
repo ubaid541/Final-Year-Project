@@ -1,5 +1,7 @@
 import Noty from 'noty'
 import axios from 'axios'
+import {initAdmin} from './admin'
+
 
 let addToCart = document.querySelectorAll('.add_to_cart')
 let cartCounter = document.querySelector('#cartCounter')
@@ -29,6 +31,9 @@ addToCart.forEach((btn)=>{
 
         let qty = document.querySelector('#qty').value
         product.qty = parseInt(qty)
+
+        // let business_id = document.querySelector('#business_id').value
+        // product.seller_id = business_id
 
         let addon = document.getElementById('addon')
         let attr = document.getElementById('attr')
@@ -70,3 +75,31 @@ addToCart.forEach((btn)=>{
 
     })
 })
+
+
+// hide alert after few second
+const successMsg = document.querySelector('.alert-success')
+if(successMsg){
+    setTimeout(()=>{
+        successMsg.remove()
+    },2000)
+}
+
+const errorMsg = document.querySelector('.alert-danger')
+if(errorMsg){
+    setTimeout(()=>{
+        errorMsg.remove()
+    },2000)
+}
+
+let adminAreaPath = window.location.pathname
+
+if(adminAreaPath.includes('admin')){
+    initAdmin()
+}
+
+
+
+
+
+

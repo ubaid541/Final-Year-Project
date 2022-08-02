@@ -10,7 +10,7 @@ const userSchema = new Schema({
     password : {type: String },
     address : {type: String },
     role : {type: String},
-    business_name : {type: String, unique:true},
+    business_name : {type: String, sparse : true},
     business_city : {
         type: mongoose.Schema.Types.ObjectId, 
         ref: 'city',

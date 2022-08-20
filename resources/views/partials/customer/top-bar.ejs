@@ -19,7 +19,7 @@
           <span class="navbar-toggler-icon bg-danger"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-          <ul class="navbar-nav ms-auto">
+          <ul class="navbar-nav ms-auto me-2">
             <li class="nav-item">
               <a class="nav-link" aria-current="page" href="/">Home</a>
             </li>
@@ -98,7 +98,29 @@
             </div>
             <% } %>
           </ul>
-          <?php include 'search.php'; ?>
+
+          <form class="d-flex ms-4" method="get" action="/search-result">
+            <input
+              class="form-control me-2"
+              type="text"
+              name="pro_box"
+              id="pro_box"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button
+              class="btn btn-outline-success"
+              id="search_product"
+              type="submit"
+            >
+              Search
+            </button>
+            <div
+              class="pro_list list-group"
+              style="position: absolute; margin-top: 2.2%"
+              id="pro_list"
+            ></div>
+          </form>
         </div>
       </div>
     </nav>

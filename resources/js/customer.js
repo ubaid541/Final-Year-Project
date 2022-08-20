@@ -104,4 +104,6 @@ export function initCustomer(){
         }).join('')
     }
 
+
+
 }

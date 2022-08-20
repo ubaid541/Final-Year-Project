@@ -92,6 +92,53 @@ if(errorMsg){
     },2000)
 }
 
+    // autocomplete search
+    $(document).ready(function() {
+        $("#pro_box").keyup(function() {
+            var search_product = $(this).val();
+            let markup;
+            if (search_product != '') {
+              axios.get('/search-product?search_query='+search_product+'',{
+                headers : {
+                    "X-Requested-With" : "XMLHttpRequest"
+                }
+            }).then(res=>{
+                var search = res.data
+                markup = genrateMarkups(search)
+                document.getElementById('pro_list').innerHTML = markup;
+
+                function genrateMarkups(search){
+                    if(search.length > 0 ){
+                        return search.map(search=>{
+                            return [
+                                `
+                                <a href="#" class="list-group-item list-group-item-action">${search.pro_name}</a>
+                                `
+                            ]
+                        }).join('')
+                    }else{
+                     return '<a href="#" class="list-group-item list-group-item-action disabled" >No product found.</a>'
+                    }
+                }
+              
+              }).catch(err=>{
+                console.log(err)
+              })
+            } else {
+                document.getElementById('pro_list').innerHTML = '';
+            }
+        });
+        // set search term to an event
+        $(document).on('click', '#pro_list a', function() {
+            $('#pro_box').val($(this).text());
+            document.getElementById('pro_list').innerHTML = '';
+        });
+    });
+
+
+
+
+
 let adminAreaPath = window.location.pathname
 
 if(adminAreaPath.includes('admin')){

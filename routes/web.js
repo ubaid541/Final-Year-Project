@@ -13,6 +13,7 @@ const commentController = require('../app/http/controllers/admin/comment')
 
 // customer modules
 const indexController = require('../app/http/controllers/customer/indexController')
+const searchController = require('../app/http/controllers/customer/searchController')
 const custAuthController = require('../app/http/controllers/customer/authController')
 const allProducts = require('../app/http/controllers/customer/allProducts')
 const singleProduct = require('../app/http/controllers/customer/singleProduct')
@@ -92,6 +93,8 @@ function initRoutes(app){
     app.post('/orders',orderController().store)
     app.get('/customer-orders',customer_auth,orderController().order_list)
     app.get('/customer/delete-order/:id',customer_auth,orderController().delete_order)
+    app.get('/search-product',searchController().search)
+    app.get('/search-result',searchController().searchResult)
 
 
     

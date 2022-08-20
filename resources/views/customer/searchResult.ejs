@@ -1,0 +1,61 @@
+<%- include('../partials/customer/top-bar') %>
+
+<section id="featured-products" class="featured-products">
+  <div class="container">
+    <div class="row mt-5">
+      <div class="heading mb-5 text-center">
+        <h4>
+          Search results for : <span class="text-danger"><%= pro_box %></span>
+        </h4>
+      </div>
+      <div class="row d-flex justify-content-center">
+        <% if(product.length){ product.forEach((product)=>{ %>
+        <div class="col-sm-4 mb-4 d-flex justify-content-center">
+          <div class="card" style="width: 18rem">
+            <img
+              src="images/<%= product.pro_image %>"
+              class="card-img-top"
+              alt="product-image"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= product.pro_name %></h5>
+              <h5 class="card-title"><%= product.pro_price %>/Rs</h5>
+              <p class="card-text"><%= product.pro_desc %></p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item d-flex justify-content-between">
+                <% if(product.pro_addon){ %>
+                <p><%= product.pro_addon.addon_name %></p>
+                <h6 class="fw-bold"><%= product.pro_addon.addon_price %>/Rs</h6>
+                <% } else{ %>
+                <p>No addons</p>
+                <% } %>
+              </li>
+              <li class="list-group-item d-flex justify-content-between">
+                <% if(product.pro_attr){ %>
+                <p><%= product.pro_attr.attr_name %></p>
+                <h6 class="fw-bold"><%= product.pro_attr.attr_price %>/Rs</h6>
+                <% } else{ %>
+                <p>No Attributes</p>
+                <% } %>
+              </li>
+            </ul>
+            <div class="card-body">
+              <a href="/single-product/<%= product._id %>" class="card-link"
+                ><%= product.pro_name %></a
+              >
+              <a
+                href="/single-business/<%= product.seller_id._id %>"
+                class="card-link"
+                ><%= product.seller_id.business_name %></a
+              >
+            </div>
+          </div>
+        </div>
+        <% }) }else{ %>
+        <h1>No products found</h1>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</section>
